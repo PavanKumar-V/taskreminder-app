@@ -1,0 +1,28 @@
+<%
+def active_class(path)
+    if request.path == path
+      return 'active'
+    else
+      return ''
+    end
+  end
+%>
+<div class="sidebar br-2">
+  <ul>
+    <li class="flex f-space-between <%= active_class(tasks_path) %> mt-3">
+      <div class="flex f-center">
+        <span class="material-symbols-outlined mr-3">task_alt</span><span><%= link_to "Tasks", tasks_path %></span>
+      </div>
+    </li>
+    <li class="flex f-space-between mt-3">
+      <div class="flex f-center">
+        <span class="material-symbols-outlined mr-3">star</span><span>Starred</span>
+      </div>
+    </li>
+    <li class="flex f-space-between <%= active_class(new_task_path) %> mt-3">
+      <div class="flex f-center">
+        <span class="material-symbols-outlined mr-3">add_task</span><span><%= link_to "New", new_task_path %></span>
+      </div>
+    </li>
+  </ul>
+</div>

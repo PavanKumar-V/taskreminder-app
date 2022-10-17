@@ -1,0 +1,35 @@
+<%# Task Card %>
+<div class="card p-2 <%= task.is_completed ? " bg-s " : " bg-p " %> rounded-lg task-card" id="<%= dom_id task %>">
+  <%# Title and poup menu %>
+  <div class="flex f-space-between">
+    <h6 class="hd-md text-w capitize <%= task.is_completed ? " text-line-through " : " "%>"><%= task.title.size > 13 ? (task.title[0..13] + "...") : task.title %></h6>
+    <span class="material-symbols-outlined cursor-p popup-toggler icon bg-w rounded-o " id="popup-toggler" style="font-weight: bolder; padding:3px;">more_vert</span>
+  </div>
+  <%# due date %>
+  <div class="flex f-c mt-2 text-sm">
+    <p class=" text-w"><%= task.is_completed ? "Task Completed" : "Due on" %></p>
+    <p class="flex f-center text-w mt-1 capitize text-bl">
+      <span class="material-symbols-outlined text-md text-w mr-1">
+        calendar_today
+      </span>
+      <%= task.end_date.strftime("%^b %-d, %Y %I:%M %p") %>
+    </p>
+  </div>
+  <%# bottom section collaborators and button action %>
+  <div class="flex f-space-between mt-3 ">
+    <div class="flex">
+      <p class=" text-w-hint">collaborators</p>
+    </div>
+    <% if !task.is_completed %>
+      <%= link_to "Mark Complete", "/tasks/#{task.id}/task_complete", method: :patch, data: {"turbo-confirm": :"Are you sure?"}, class: "btn bg-w text-b" %>
+    <% end %>
+  </div>
+  <%# pop up menu %>
+  <div class="popup-menu display-none">
+    <ul>
+      <li class="popup-link"><a href="">Star</a></li>
+      <li class="popup-link"><%= link_to "Edit", edit_task_path(task) %></li>
+      <li class="popup-link"><%= button_to "Delete", task, method: :delete, data: {"turbo-confirm": :"Are you sure?"}, class: "btn-link"%></li>
+    </ul>
+  </div>
+</div>

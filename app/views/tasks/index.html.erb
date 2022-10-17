@@ -1,0 +1,21 @@
+<p style="color: green"><%= notice %></p>
+<div>
+  <div class="flex f-center mb-2">
+    <h1 class="hd-lg">Tasks</h1>
+  </div>
+  <div class="tasks grid">
+    <% @tasks.each do |task| %>
+      <% unless task.is_completed %>
+        <%= render task %>
+      <% end %>
+    <% end %>
+  </div>
+  <h1 class="hd-lg mt-3 mb-2">Completed Tasks</h1>
+  <div class="tasks grid">
+    <% @tasks.each do |task| %>
+      <% unless !task.is_completed %>
+        <%= render task %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

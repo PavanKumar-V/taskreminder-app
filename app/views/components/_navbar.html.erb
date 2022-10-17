@@ -1,0 +1,26 @@
+<nav>
+  <div class="container">
+    <div class="navbar">
+      <%# child 1 %>
+      <div class="nav-brand">
+        <div class="flex f-center">
+          <%= image_tag "logo.png", class: "logo" %>
+          <h6 class="hd-sm">Chore</h6>
+        </div>
+      </div>
+
+      <form action="/tasks/search/" method="get" class="flex">
+        <div class="input-field m-0">
+          <label for="serach"></label>
+          <input type="text" name="search" placeholder="search Tasks.." class="m-0 min-w-300">
+        </div>
+          <button type="submit" class="btn" value="Search">Search</button>
+      </form>
+
+
+      <%# child 2 %>
+      <div class="avatar">
+      </div>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,62 @@
+<%= form_with(model: task) do |form| %>
+  <% if task.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
+      <ul>
+        <% task.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="input-field">
+    <%= form.label :title, style: "display: block" %>
+    <%= form.text_field :title,placeholder: "Title", class: "input-slate" %>
+  </div>
+  <div class="input-field">
+    <%= form.label :description, style: "display: block" %>
+    <%= form.text_area :description , placeholder: "Write Description...", class: "input-slate", rows: "10" %>
+  </div>
+  <h2 class="hd-md mt-4 ">Pick Date</h2>
+  <div class="flex f-space-between mb-3">
+    <div class="input-field">
+      <%= form.label :start_date, style: "display: block", class: "text-b " %>
+      <% if task.start_date %>
+        <p><%= task.start_date %></p>
+        <%= form.text_field :start_date , class: "date-picker flatpickr-input", placeholder: "Select date..", type: "text", value: task.start_date.strftime("%^b %-d, %Y %I:%M %p"), readonly: "readonly" %>
+      <% else %>
+        <%= form.text_field :start_date , class: "date-picker flatpickr-input", placeholder: "Select date..", type: "text", readonly: "readonly" %>
+      <% end %>
+    </div>
+    <div class="input-field">
+      <%= form.label :end_date, style: "display: block", class: "text-b " %>
+      <% if task.end_date %>
+        <%= form.text_field :end_date , class: "date-picker flatpickr-input", placeholder: "Select date..", type: "text", value: task.end_date.strftime("%^b %-d, %Y %I:%M %p"), readonly: "readonly" %>
+      <% else %>
+        <%= form.text_field :end_date , class: "date-picker flatpickr-input", placeholder: "Select date..", type: "text", readonly: "readonly" %>
+      <% end %>
+    </div>
+  </div>
+  <% if task.is_completed == true || task.is_completed == false%>
+    <div class="input-field mb-2">
+      <h3 class="hd-md">Task Completion Status</h3>
+      <label class="toggle" for="task_is_completed">
+        <input  type="hidden" name="task[is_completed]" value="0" autocomplete="off">
+        <input type="checkbox" name="task[is_completed]"   class="toggle__input" id="task_is_completed" <%= task.is_completed ? "checked" : nil %> />
+        <span class="toggle-track">
+          <span class="toggle-indicator">
+            <!--  This check mark is optional  -->
+            <span class="checkMark">
+              <svg viewBox="0 0 24 24" id="ghq-svg-check" role="presentation" aria-hidden="true">
+                <path d="M9.86 18a1 1 0 01-.73-.32l-4.86-5.17a1.001 1.001 0 011.46-1.37l4.12 4.39 8.41-9.2a1 1 0 111.48 1.34l-9.14 10a1 1 0 01-.73.33h-.01z"></path>
+              </svg>
+            </span>
+          </span>
+        </span>
+      </label>
+    </div>
+  <% end %>
+  <div class="">
+    <%= form.submit :class => 'btn rounded-0 ' %>
+  </div>
+<% end %>

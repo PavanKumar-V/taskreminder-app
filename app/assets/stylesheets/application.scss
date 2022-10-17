@@ -1,0 +1,191 @@
+// Montserrat font url
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+
+// variables
+
+// colors
+$primary: #5a3ac9;
+$onPrimary: #fff;
+$secondary: #da6b3e;
+$white: #fff;
+$text: #333;
+$black: #333;
+$background: #f4f0ed;
+$grey: #eee;
+$blackHint: rgba(
+  $color: $text,
+  $alpha: 0.7,
+);
+$whitehint: rgba(
+  $color: $white,
+  $alpha: 0.7,
+);
+$error: #c93a3a;
+$success: #0fca90;
+
+// universal styling
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  color: #333;
+  font-family: "Montserrat", sans-serif;
+}
+
+ul {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+// utility
+
+// button
+@import "parts/button";
+
+// input
+@import "parts/input";
+
+// margin padding flex containers
+@import "parts/utility";
+
+// page styles
+
+// main area
+.main {
+  width: 100%;
+  margin-top: 48px;
+  margin-left: 150px;
+  margin-right: 150px;
+}
+// navbar
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 48px;
+  background-color: $white;
+  border-bottom: 2px solid $grey;
+  z-index: 1;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+
+  .logo {
+    width: 40px;
+    border-radius: 10px;
+    margin-right: 8px;
+  }
+
+  .avatar {
+    background: $grey;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+  }
+}
+
+// sidebar
+
+.sidebar {
+  min-width: 150px;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  background-color: $white;
+
+  ul {
+    width: 100%;
+  }
+
+  ul li {
+    font-size: 18px;
+    font-weight: 500;
+    height: 50px;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &.active {
+      font-weight: bold;
+
+      .material-symbols-outlined {
+        font-weight: bold;
+      }
+    }
+  }
+
+  ul li.active:after {
+    content: "";
+    position: relative;
+    top: 0;
+    left: 100;
+    height: 50px;
+    border-right: 7px solid $primary;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+  }
+}
+
+.sidebar-right {
+  right: 48px;
+}
+
+// task section
+
+.task-card {
+  position: relative;
+  width: 350px;
+}
+
+// popup menu
+.popup-menu {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  background-color: $white;
+  border-radius: 10px;
+  border: 1px solid $primary;
+  font-size: 1rem;
+  box-shadow: 0px 4px 6px rgba(#333, 0.4);
+  display: none;
+  font-weight: 400;
+  overflow: hidden;
+
+  ul li {
+    padding: 8px 18px;
+
+    a {
+      display: block;
+    }
+    &:hover {
+      background-color: $grey;
+    }
+  }
+}
+
+#popup-toggler {
+  font-variation-settings: "FILL" 1, "wght" 800, "GRAD" 0, "opsz" 20 !important;
+}
+
+.btn-link {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+// input flat style
+
+// media queries
+@import "parts/mediaquery";

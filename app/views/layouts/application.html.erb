@@ -5,11 +5,33 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <%= javascript_importmap_tags %>
   </head>
-
   <body>
-    <%= yield %>
+    <%# Navbar %>
+    <%= render 'components/navbar' %>
+    <%# Container %>
+    <div class="container">
+      <div class="flex">
+        <%# left sidebar %>
+        <%= render 'components/sidebar' %>
+        <%# main content %>
+        <div class="main p-2">
+          <%= yield %>
+        </div>
+        <%# right sidebar %>
+        <%= render 'components/sidebarright' %>
+      </div>
+    </div>
+    <script>
+      flatpickr(".date-picker",{
+          enableTime: true,
+         dateFormat: "M d, Y h:i K",
+        });
+    </script>
   </body>
 </html>
