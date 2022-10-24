@@ -1,11 +1,11 @@
 // Montserrat font url
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
-
 // variables
 
 // colors
 $primary: #5a3ac9;
+$primaryDark: #150C35;
 $onPrimary: #fff;
 $secondary: #da6b3e;
 $white: #fff;
@@ -24,12 +24,16 @@ $whitehint: rgba(
 $error: #c93a3a;
 $success: #0fca90;
 
+// media sizes
+$desktop-size : 1224px;
+$tablet-size : 820px;
+$mobile-size : 540px;
+
 // universal styling
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  color: #333;
   font-family: "Montserrat", sans-serif;
 }
 
@@ -39,6 +43,7 @@ ul {
 
 a {
   text-decoration: none;
+  color: $text;
 }
 
 // utility
@@ -57,9 +62,12 @@ a {
 // main area
 .main {
   width: 100%;
+  max-width: 1000px;
   margin-top: 48px;
   margin-left: 150px;
   margin-right: 150px;
+
+
 }
 // navbar
 nav {
@@ -78,25 +86,28 @@ nav {
   align-items: center;
   height: 100%;
 
-  .logo {
-    width: 40px;
-    border-radius: 10px;
-    margin-right: 8px;
-  }
 
-  .avatar {
-    background: $grey;
-    width: 40px;
-    height: 40px;
-    border-radius: 100%;
-  }
+
+}
+
+.avatar {
+  background: $grey;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+}
+
+.logo {
+  width: 40px;
+  border-radius: 10px;
+  margin-right: 8px;
 }
 
 // sidebar
 
 .sidebar {
   min-width: 150px;
-  height: 100vh;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -138,14 +149,17 @@ nav {
 }
 
 .sidebar-right {
-  right: 48px;
+  // position: absolute !important;
+  min-width: 200px;
+  right: 0;
 }
 
 // task section
 
 .task-card {
   position: relative;
-  width: 350px;
+  min-width: 300px;
+  max-width: 400px;
 }
 
 // popup menu
@@ -185,7 +199,38 @@ nav {
   cursor: pointer;
 }
 
-// input flat style
+// input date picker
+.flatpickr-calendar {
+  overflow: hidden;
+  margin-top: 5px;
+  box-shadow: 0px 2px 6px 1px rgba(#000, 0.2) !important;
+}
+.flatpickr-calendar.animate.inline {
+  display: block !important;
+}
+.flatpickr-day.selected,
+.flatpickr-day.today.selected {
+  background-color: $primary !important;
+  border-color: $primary !important;
+}
+.flatpickr-day.today {
+  border-color: $primary !important;
+}
+// .flatpickr-monthDropdown-month{
+//   color: $white !important;
+// }
+// .flatpickr-months{
+//   color: $white !important;
+//   background-color: $primary !important;
+// }
+
+// .flatpickr-months * {
+//   color: #fff !important;
+// }
+
+// .flatpickr-prev-month, .flatpickr-next-month * {
+// color: #fff
+// }
 
 // media queries
 @import "parts/mediaquery";

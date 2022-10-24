@@ -1,15 +1,17 @@
 class TasksController < ApplicationController
   # before_action :set_task, only: %i[ show edit update destroy mark_complete ]
-
+  before_action :authenticate_user!
   # GET /tasks or /tasks.json
   def index
-    @tasks = Task.all
+    if (params[:search])
+      @tasks = Task.where(["title LIKE ?","%#{params[:search]}%"])
+    else
+      @tasks = Task.all.order("start_date DESC");
+      # @tasks = Task.all.where(start_date: (Time.now)..(Time.now.next_day)).order("start_date DESC");
+    end
   end
 
-  # GET /tasks/1 or /tasks/1.json
-  def show
-    @task = Task.find(params[:id])
-  end
+
 
   # GET /tasks/new
   def new
@@ -72,17 +74,19 @@ class TasksController < ApplicationController
     end
   end
 
-  # POST /tasks/search/verify
-  def search_tasks
-    puts "search invoked"
-    if params[:search].present?
-      # @parameter = params[:search].downcase
-      @tasks = Task.where("title LIKE ?", "%#{params[:search]}%")
-      render :index, task: @task
+
+   # GET /tasks/date/2022-10-19
+   def get_tasks_by_date
+    puts "get_by_date"
+    if params[:date]
+    next_day_date = Date.parse(params[:date]).strftime("%Y-%m-%d").next;
+    @tasks = Task.where(start_date: (params[:date])..("#{next_day_date}"))
+    @date = params[:date]
+    render :index
     else
-      render :index, status: :unprocessable_entity
+      redirect_to tasks_url(@tasks), notice: "specify date"
     end
-  end
+   end
 
   private
     # # Use callbacks to share common setup or constraints between actions.
@@ -92,6 +96,6 @@ class TasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def task_params
-      params.require(:task).permit(:id, :title, :description, :start_date, :end_date, :is_completed, :search)
+      params.require(:task).permit(:id, :title, :description, :start_date, :end_date, :is_completed, :search, :date)
     end
 end

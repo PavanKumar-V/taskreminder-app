@@ -1,9 +1,35 @@
+<%# utility functions %>
+<%
+def is_current(path)
+    if request.path == path
+      return true
+    else
+      return false
+    end
+  end
+%>
 <%# Task Card %>
-<div class="card p-2 <%= task.is_completed ? " bg-s " : " bg-p " %> rounded-lg task-card" id="<%= dom_id task %>">
+<div class="card p-2 <%= task.is_completed ? " bg-s " : " bg-p "  %>  rounded-lg task-card" id="<%= dom_id task %>">
   <%# Title and poup menu %>
   <div class="flex f-space-between">
-    <h6 class="hd-md text-w capitize <%= task.is_completed ? " text-line-through " : " "%>"><%= task.title.size > 13 ? (task.title[0..13] + "...") : task.title %></h6>
+    <div class="flex f-c f-start">
+      <h6 class="hd-md text-w capitize <%= task.is_completed ? " text-line-through " : " "%>"><%= task.title.size > 15 ? (task.title[0..8] + "...") : task.title %></h6>
+      <% if task.title.size > 15 %>
+        <p class='text-w-hint capitize'> <%= task.title %></p>
+      <% end %>
+    </div>
+    <div>
     <span class="material-symbols-outlined cursor-p popup-toggler icon bg-w rounded-o " id="popup-toggler" style="font-weight: bolder; padding:3px;">more_vert</span>
+    <%# pop up menu %>
+  <div class="popup-menu display-none">
+    <ul>
+      <% is_starred_page =  is_current(starred_tasks_path) %>
+      <li class="popup-link"> <%= link_to  is_starred_page ? "Remove" : "Star" , is_starred_page ? remove_starred_path(task) : add_to_starred_path(task), method: is_starred_page ? :delete : :post %></li>
+      <li class="popup-link"><%= link_to "Edit", edit_task_path(task) %></li>
+      <li class="popup-link"><%= button_to "Delete", task, method: :delete, data: {"confirm": :"Are you sure?"}, class: "btn-link"%></li>
+    </ul>
+  </div>
+    </div>
   </div>
   <%# due date %>
   <div class="flex f-c mt-2 text-sm">
@@ -12,7 +38,8 @@
       <span class="material-symbols-outlined text-md text-w mr-1">
         calendar_today
       </span>
-      <%= task.end_date.strftime("%^b %-d, %Y %I:%M %p") %>
+      <%= task.start_date.strftime("%I:%M %p") %> -
+      <%= task.end_date.strftime("%I:%M %p") %>
     </p>
   </div>
   <%# bottom section collaborators and button action %>
@@ -21,15 +48,8 @@
       <p class=" text-w-hint">collaborators</p>
     </div>
     <% if !task.is_completed %>
-      <%= link_to "Mark Complete", "/tasks/#{task.id}/task_complete", method: :patch, data: {"turbo-confirm": :"Are you sure?"}, class: "btn bg-w text-b" %>
+      <%= link_to "Mark Complete", "/tasks/#{task.id}/task_complete", method: :patch, data: {"turbo-confirm": :"Are you sure?"}, class: "btn btn-peace" %>
     <% end %>
   </div>
-  <%# pop up menu %>
-  <div class="popup-menu display-none">
-    <ul>
-      <li class="popup-link"><a href="">Star</a></li>
-      <li class="popup-link"><%= link_to "Edit", edit_task_path(task) %></li>
-      <li class="popup-link"><%= button_to "Delete", task, method: :delete, data: {"turbo-confirm": :"Are you sure?"}, class: "btn-link"%></li>
-    </ul>
-  </div>
+
 </div>

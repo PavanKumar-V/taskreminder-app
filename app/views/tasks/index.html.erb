@@ -1,21 +1,44 @@
-<p style="color: green"><%= notice %></p>
 <div>
-  <div class="flex f-center mb-2">
+  <div class="flex f-center mb-3">
     <h1 class="hd-lg">Tasks</h1>
+    <div class="flex f-center ml-2">
+      <a href="/tasks/date/<%= @date ? Date.parse("#{@date}").prev_day : Date.parse(Time.now.strftime("%Y-%m-%d")).prev_day %>">
+        <span class="material-symbols-outlined mr-3 p-1 bg-c rounded-o">
+          chevron_left
+        </span>
+      </a>
+      <h4 id="cur-date"> <%= @date ? @date : Time.now.strftime("%Y-%m-%d") %> </h4>
+      <a href="/tasks/date/<%= @date ? Date.parse(@date).next : Time.now.strftime("%Y-%m-%d").next %>">
+        <span class="material-symbols-outlined ml-3 p-1 bg-c rounded-o">
+          chevron_right
+        </span>
+      </a>
+    </div>
+    <div class="action">
+      <span class="material-symbols-outlined ml-3 p-1 bg-c rounded-o show-on-small ">
+        calendar_month
+      </span>
+    </div>
   </div>
-  <div class="tasks grid">
-    <% @tasks.each do |task| %>
-      <% unless task.is_completed %>
-        <%= render task %>
+  <% if @tasks.size() > 0 %>
+    <div class="tasks grid">
+      <% @tasks.each do |task| %>
+        <% unless task.is_completed %>
+          <%= render task %>
+        <% end %>
       <% end %>
-    <% end %>
-  </div>
-  <h1 class="hd-lg mt-3 mb-2">Completed Tasks</h1>
-  <div class="tasks grid">
-    <% @tasks.each do |task| %>
-      <% unless !task.is_completed %>
-        <%= render task %>
+    </div>
+    <h1 class="hd-lg mt-3 mb-2">Completed Tasks</h1>
+    <div class="tasks grid">
+      <% @tasks.each do |task| %>
+        <% unless !task.is_completed %>
+          <%= render task %>
+        <% end %>
       <% end %>
-    <% end %>
-  </div>
+    </div>
+  <% else %>
+    <div class="flex f-center-vh text-center" style="height: 85vh;">
+      <h2 class="text-b-hint">Nothing in here!</h2>
+    </div>
+  <% end %>
 </div>

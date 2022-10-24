@@ -8,21 +8,21 @@ def active_class(path)
   end
 %>
 <div class="sidebar br-2">
-  <ul>
+  <ul data-turbolinks="false">
     <li class="flex f-space-between <%= active_class(tasks_path) %> mt-3">
-      <div class="flex f-center">
-        <span class="material-symbols-outlined mr-3">task_alt</span><span><%= link_to "Tasks", tasks_path %></span>
-      </div>
+      <a class="flex f-center sidebar-link" href="/tasks">
+        <span class="material-symbols-outlined mr-3">task_alt</span><span class="sidebar-link-text">Tasks</span>
+      </a>
     </li>
-    <li class="flex f-space-between mt-3">
-      <div class="flex f-center">
-        <span class="material-symbols-outlined mr-3">star</span><span>Starred</span>
-      </div>
+    <li class="flex f-space-between mt-3 <%= active_class(starred_tasks_path) %>">
+      <a class="flex f-center sidebar-link" href="/starred_tasks">
+        <span class="material-symbols-outlined mr-3">star</span><span class="sidebar-link-text">Starred</span>
+      </a>
     </li>
     <li class="flex f-space-between <%= active_class(new_task_path) %> mt-3">
-      <div class="flex f-center">
-        <span class="material-symbols-outlined mr-3">add_task</span><span><%= link_to "New", new_task_path %></span>
-      </div>
+      <a class="flex f-center sidebar-link" href="/tasks/new">
+        <span class="material-symbols-outlined mr-3">add_task</span><span class="sidebar-link-text">New</span>
+      </a>
     </li>
   </ul>
 </div>

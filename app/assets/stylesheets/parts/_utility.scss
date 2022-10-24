@@ -15,6 +15,13 @@
   padding: 8px;
 }
 
+.px-lg {
+  padding: 0px 100px;
+}
+.px-xl {
+  padding: 0px 180px;
+}
+
 .py-1 {
   padding: 8px;
 }
@@ -38,6 +45,27 @@
 
 .mr-3 {
   margin-right: 16px;
+}
+
+// margin left right
+
+.mx-3 {
+  margin-right: 16px;
+  margin-left: 16px;
+}
+.mx-4 {
+  margin-right: 24px;
+  margin-left: 24px;
+}
+
+.mx-lg {
+  margin-right: 120px;
+  margin-left: 120px;
+}
+
+.mx-xl {
+  margin: 0px 150px ;
+
 }
 
 // ml
@@ -78,6 +106,10 @@
   margin-bottom: 16px;
 }
 
+.mb-4 {
+  margin-bottom: 32px;
+}
+
 // border
 
 .br-2 {
@@ -111,6 +143,12 @@
 .bg-p {
   background-color: $primary;
 }
+.bg-p-dark {
+  background-color: $primaryDark;
+}
+.bg-p {
+  background-color: $primary;
+}
 
 .bg-s {
   background-color: $success;
@@ -118,6 +156,14 @@
 
 .bg-grey {
   background-color: $grey;
+}
+
+.bg-err {
+  background-color: $error !important;
+}
+
+.bg-c {
+  background-color: $background;
 }
 
 .bg-w {
@@ -132,8 +178,34 @@
   color: $black !important;
 }
 
+.text-p-dark {
+  color: $primaryDark !important;
+}
+
+.text-center {
+  text-align: center;
+}
+
+
+
+.text-b-hint {
+  color: $blackHint;
+}
+
+.text-ele-w > * {
+  color: $white ;
+}
+
+.text-ele-b > * {
+  color: $text ;
+}
+
 .text-w-hint {
-  color: $whitehint;
+  color: $whitehint !important;
+}
+
+.text-underline{
+  text-decoration: underline;
 }
 
 //
@@ -156,17 +228,36 @@
   display: none;
 }
 
+.show-on-small {
+  display: none !important;
+}
+
 // width
 .w-25 {
   width: 25%;
 }
 
+.w-30 {
+  width: 30%;
+}
+.w-35 {
+  width: 35%;
+}
 .w-100 {
   width: 100%;
 }
 
-.min-w-300{
+.min-w-300 {
   min-width: 300px;
+}
+
+.w-50 {
+  width: 50%;
+}
+
+// height
+.h-100 {
+  height: 100%;
 }
 
 // containers
@@ -175,6 +266,11 @@
   height: 100%;
   margin: 0 auto;
   overflow: hidden;
+}
+
+.full-screen {
+  width: 100vw;
+  height: 100vh;
 }
 
 // text
@@ -201,6 +297,10 @@
   font-size: 16px !important;
 }
 
+.text-lg {
+  font-size: 57px !important;
+}
+
 .text-b {
   font-weight: bold;
 }
@@ -221,6 +321,19 @@
   flex-direction: column;
 }
 
+.f-start {
+  justify-content: start !important;
+  align-items: flex-start !important;
+}
+
+.f-wrap {
+  flex-wrap: wrap;
+}
+.f-center-vh {
+  justify-content: center;
+  align-items: center;
+}
+
 .f-center {
   align-items: center;
 }
@@ -234,12 +347,22 @@
 .grid {
   display: grid;
   grid-template-columns: auto auto auto;
-  gap: 20px;
+  gap: 10px;
 }
 
 // position
 .pos-abs {
   position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.pos-fix {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 100;
 }
 
 .pos-rel {
@@ -260,4 +383,9 @@
 
 .pos-l-0 {
   left: 0;
+}
+
+//
+.shadow {
+  box-shadow: 0px 3px 12px rgba(#333, 0.3);
 }

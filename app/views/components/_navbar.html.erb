@@ -8,18 +8,22 @@
           <h6 class="hd-sm">Chore</h6>
         </div>
       </div>
-
-      <form action="/tasks/search/" method="get" class="flex">
-        <div class="input-field m-0">
-          <label for="serach"></label>
-          <input type="text" name="search" placeholder="search Tasks.." class="m-0 min-w-300">
+      <%= form_tag tasks_path, :method => "get" do %>
+        <div class="flex">
+          <%= text_field_tag :search, params[:search], class: "min-w-300 mr-1", placeholder: "search tasks.." %>
+          <%# <%= submit_tag "Search"%>
         </div>
-          <button type="submit" class="btn" value="Search">Search</button>
-      </form>
-
-
+      <% end %>
       <%# child 2 %>
-      <div class="avatar">
+      <div>
+        <%= image_tag "avatar.png", class: "avatar cursor-p", id: "popup-toggler" %>
+        <div class="popup-menu display-none" >
+          <ul>
+            <li class="popup-link">Account</li>
+            <li class="popup-link">Collab Requests</li>
+            <li class="popup-link">  <%= link_to "Sign out", destroy_user_session_path, method: :delete %></li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>

@@ -9,4 +9,29 @@
   font-weight: bold;
   font-size: 14px;
   display: inline;
+  &:hover {
+    background-color: rgba($primaryDark, 0.9);
+  }
+  &-p {
+    background-color: $primary;
+    color: $white;
+
+    &:hover {
+      background-color: rgba($primary, 0.5);
+    }
+  }
+
+  &-peace {
+    background-color: $white !important;
+    color: $primaryDark !important;
+
+    &:hover {
+      background-color: $grey in !important;
+    }
+  }
+}
+
+.btn-block {
+  display: block;
+  text-align: center;
 }

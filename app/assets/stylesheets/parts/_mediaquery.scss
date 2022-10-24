@@ -1,13 +1,62 @@
-@media only screen and (max-width: 1224px) {
-
+@media only screen and (max-width: $desktop-size) {
+  .container {
+    // display: none;
+    padding: 0px 10px;
+  }
   .tasks.grid {
     grid-template-columns: auto auto;
   }
 }
+@media only screen and (max-width: $tablet-size) {
+  .sidebar-right {
+    display: none;
+  }
 
-@media only screen and (max-width: 768px) {
+  .sidebar {
+    min-width: 60px !important;
 
+    .sidebar-link {
+      justify-content: space-evenly !important;
+      padding: 12px;
+      .mr-3 {
+        margin: 0;
+      }
+    }
+
+    .sidebar-link-text {
+      display: none;
+    }
+  }
+
+  .show-on-small {
+    display: block !important;
+  }
+
+  .main {
+    width: 100%;
+    margin-left: 70px;
+    margin-right: 10px;
+  }
+  .tasks.grid {
+    grid-template-columns: auto auto;
+  }
+}
+@media only screen and (max-width: $mobile-size) {
   .tasks.grid {
     grid-template-columns: auto;
+  }
+
+  #cur-date {
+    width: 80px;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .hd-md {
+    font-size: 24px;
+  }
+
+  .hd-lg {
+    font-size: 32px;
   }
 }

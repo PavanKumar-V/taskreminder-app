@@ -11,9 +11,19 @@ input {
   border-radius: 8px;
   border: 1px solid $primary;
   outline: none;
+  transition: all 0.2s ease-in;
 }
 
-input:focus {
+input[value].input-slate, textarea.input-slate{
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.date-pickers input[value]{
+  font-size: 14px;
+  font-weight: bold;
+}
+input:focus, textarea:focus {
   box-shadow: 0px 0px 0px 3px rgba($color: $primary, $alpha: 0.3);
 }
 
@@ -22,14 +32,12 @@ textarea {
   padding: 10px;
   border-radius: 8px;
   border: 1px solid $primary;
+  transition: all 0.2s ease-in;
 }
 
-.input-field {
-  margin-top: 18px;
-}
+
 .input-slate {
   padding: 14px;
-  box-shadow: 0px 5px 8px 0px rgba(#333, 0.2);
 }
 
 .date-picker {
@@ -54,6 +62,13 @@ textarea {
   }
 }
 
+button, input[type="button"] {
+  outline: none;
+  border: none;
+  font-weight: normal !important;
+  letter-spacing: 1px;
+}
+
 
 // checkbox switch
 $toggle-indicator-size: 24px; // changing this number will resize the whole toggle
@@ -73,7 +88,7 @@ You'll need to replace with your own color values.
 $track-border: $primary;
 $track-background: rgba($color: $primary, $alpha: 1);
 $focus-ring: 0px 0px 0px 2px $primary;
-$speed: 0.5s;
+$speed: 0.3s;
 $dark: $black;
 // Toggle specific styles
 .toggle {
@@ -101,8 +116,8 @@ $dark: $black;
   // This style sets the focus ring. The ":not([disabled])" prevents the focus ring from creating a flash when the element is clicked.
   &:not([disabled]):active + .toggle-track,
   &:not([disabled]):focus + .toggle-track {
-    border: 1px solid transparent;
-    box-shadow: $focus-ring;
+    border: 1px solid $primary;
+    box-shadow: 0px 0px 0px 3px rgba($color: $primary, $alpha: 0.3);
   }
 
   &:disabled + .toggle-track {
@@ -112,7 +127,7 @@ $dark: $black;
 }
 
 .toggle-track {
-  background: $track-background;
+  background: transparent;
   border: 1px solid $track-border;
   border-radius: 100px;
   cursor: pointer;
@@ -125,7 +140,7 @@ $dark: $black;
 
 .toggle-indicator {
   align-items: center;
-  background: $white;
+  background: $primary;
   border-radius: $toggle-indicator-size;
   bottom: 2px;
   display: flex;
@@ -148,14 +163,17 @@ $dark: $black;
 }
 
 .toggle__input:checked + .toggle-track .toggle-indicator {
-  background: $dark;
+  background: $success;
   transform: translateX($track-width - $track-height);
+
 
   .checkMark {
     opacity: 1;
     transition: opacity $speed ease-in-out;
   }
 }
+
+
 
 @media screen and (-ms-high-contrast: active) {
   .toggle-track {

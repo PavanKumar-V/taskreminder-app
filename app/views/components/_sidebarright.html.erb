@@ -1,3 +1,12 @@
-<div class="sidebar sidebar-right bl-2">
-right side bar
+<div class="sidebar sidebar-right bl-2 flex f-c f-start">
+  <form class="p-1" style="margin-top: 50px" data-turbolinks="false">
+    <h4>Pick Date</h4>
+    <div class="input-field">
+      <input type="text" name="date" id="date" class="date-picker-calendar" placeholder="select date.." readonly>
+    </div>
+    <a href="/tasks/date/<%= Time.now.strftime("%Y-%m-%d")%>" class="btn btn-block mt-2" style="font-weight: normal;"  id="get-tasks">Get Tasks</a>
+  </form>
+
+
+</div>
 </div>

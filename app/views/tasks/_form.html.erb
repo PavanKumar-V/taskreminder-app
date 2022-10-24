@@ -10,25 +10,27 @@
     </div>
   <% end %>
   <div class="input-field">
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title,placeholder: "Title", class: "input-slate" %>
+    <%= form.label :title, style: "display: block", class: "mb-2" %>
+    <%= form.text_field :title , placeholder: "Title", class: "input-slate" %>
   </div>
   <div class="input-field">
-    <%= form.label :description, style: "display: block" %>
+    <%= form.label :description, style: "display: block", class: "mb-2" %>
     <%= form.text_area :description , placeholder: "Write Description...", class: "input-slate", rows: "10" %>
   </div>
+
   <h2 class="hd-md mt-4 ">Pick Date</h2>
   <div class="flex f-space-between mb-3">
-    <div class="input-field">
+    <div class="input-field date-pickers">
       <%= form.label :start_date, style: "display: block", class: "text-b " %>
       <% if task.start_date %>
-        <p><%= task.start_date %></p>
-        <%= form.text_field :start_date , class: "date-picker flatpickr-input", placeholder: "Select date..", type: "text", value: task.start_date.strftime("%^b %-d, %Y %I:%M %p"), readonly: "readonly" %>
+      <%= task.start_date %>
+        <%= form.text_field :start_date , class: "date-picker", placeholder: "Select date..", value: task.start_date.strftime("%^b %-d, %Y %I:%M %p"),"data-id": task.start_date.strftime("%Y-%m-%d %H:%M"), readonly: "readonly" %>
       <% else %>
         <%= form.text_field :start_date , class: "date-picker flatpickr-input", placeholder: "Select date..", type: "text", readonly: "readonly" %>
       <% end %>
     </div>
-    <div class="input-field">
+
+    <div class="input-field date-pickers">
       <%= form.label :end_date, style: "display: block", class: "text-b " %>
       <% if task.end_date %>
         <%= form.text_field :end_date , class: "date-picker flatpickr-input", placeholder: "Select date..", type: "text", value: task.end_date.strftime("%^b %-d, %Y %I:%M %p"), readonly: "readonly" %>
