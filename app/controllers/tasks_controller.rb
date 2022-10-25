@@ -1,12 +1,13 @@
 class TasksController < ApplicationController
   # before_action :set_task, only: %i[ show edit update destroy mark_complete ]
+  # before_action :get_user, only: %i[ new create index]
   before_action :authenticate_user!
   # GET /tasks or /tasks.json
   def index
     if (params[:search])
-      @tasks = Task.where(["title LIKE ?","%#{params[:search]}%"])
+      @tasks = current_user.tasks.where(["title LIKE ?","%#{params[:search]}%"])
     else
-      @tasks = Task.all.order("start_date DESC");
+      @tasks = current_user.tasks.where(start_date: (Time.now)..(Time.now.next_day)).order("start_date DESC");
       # @tasks = Task.all.where(start_date: (Time.now)..(Time.now.next_day)).order("start_date DESC");
     end
   end
@@ -25,7 +26,8 @@ class TasksController < ApplicationController
 
   # POST /tasks or /tasks.json
   def create
-    @task = Task.new(task_params)
+    @user = User.find(current_user.id)
+    @task = @user.tasks.create(task_params)
 
     respond_to do |format|
       if @task.save
@@ -77,12 +79,12 @@ class TasksController < ApplicationController
 
    # GET /tasks/date/2022-10-19
    def get_tasks_by_date
-    puts "get_by_date"
+    @user = User.find(current_user.id)
     if params[:date]
-    next_day_date = Date.parse(params[:date]).strftime("%Y-%m-%d").next;
-    @tasks = Task.where(start_date: (params[:date])..("#{next_day_date}"))
-    @date = params[:date]
-    render :index
+      next_day_date = Date.parse(params[:date]).strftime("%Y-%m-%d").next;
+      @tasks = current_user.tasks.where(start_date: (params[:date])..("#{next_day_date}"))
+      @date = params[:date]
+      render :index
     else
       redirect_to tasks_url(@tasks), notice: "specify date"
     end
@@ -92,6 +94,10 @@ class TasksController < ApplicationController
     # # Use callbacks to share common setup or constraints between actions.
     # def set_task
     #   @task = Task.find(params[:id])
+    # end
+
+    # def get_user
+    #   @user = User.find(current_user.id)
     # end
 
     # Only allow a list of trusted parameters through.

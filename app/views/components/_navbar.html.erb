@@ -19,7 +19,7 @@
         <%= image_tag "avatar.png", class: "avatar cursor-p", id: "popup-toggler" %>
         <div class="popup-menu display-none" >
           <ul>
-            <li class="popup-link">Account</li>
+            <li class="popup-link">  <%= link_to "Account", edit_user_registration_path%></li>
             <li class="popup-link">Collab Requests</li>
             <li class="popup-link">  <%= link_to "Sign out", destroy_user_session_path, method: :delete %></li>
           </ul>
