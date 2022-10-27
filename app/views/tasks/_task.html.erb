@@ -48,7 +48,7 @@ def is_current(path)
       <p class=" text-w-hint">collaborators</p>
     </div>
     <% if !task.is_completed %>
-      <%= link_to "Mark Complete", "/tasks/#{task.id}/task_complete", method: :patch, data: {"turbo-confirm": :"Are you sure?"}, class: "btn btn-peace" %>
+      <%= link_to "Mark Complete", "/tasks/#{task.id}/task_complete", method: :patch, class: "btn btn-peace" %>
     <% end %>
   </div>
 

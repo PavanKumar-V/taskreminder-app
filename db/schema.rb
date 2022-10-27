@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_24_101949) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_25_073740) do
   create_table "starred_tasks", force: :cascade do |t|
     t.integer "task_id", null: false
     t.datetime "created_at", null: false
@@ -38,6 +38,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_24_101949) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "full_name"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

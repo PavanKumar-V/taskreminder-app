@@ -1,11 +1,18 @@
 input[type="text"],
+input[type="email"],
+input[type="submit"],
 input[type="password"],
 textarea,
 select {
   outline: none;
+  border: none;
 }
 
-input {
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
   width: 100%;
   padding: 10px;
   border-radius: 8px;
