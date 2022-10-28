@@ -1,0 +1,17 @@
+<%= form_with(model: avatar) do |form| %>
+  <% if avatar.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(avatar.errors.count, "error") %> prohibited this avatar from being saved:</h2>
+
+      <ul>
+        <% avatar.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+<%= form.file_field :image %>
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

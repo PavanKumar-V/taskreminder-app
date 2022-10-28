@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @avatar %>
+
+<div>
+  <%= link_to "Edit this avatar", edit_avatar_path(@avatar) %> |
+  <%= link_to "Back to avatars", avatars_path %>
+
+  <%= button_to "Destroy this avatar", @avatar, method: :delete %>
+</div>

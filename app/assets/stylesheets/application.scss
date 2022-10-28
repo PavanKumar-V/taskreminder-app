@@ -204,6 +204,23 @@ nav {
   cursor: pointer;
 }
 
+// task cards
+.tasks.grid{
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 10px;
+}
+
+//avatars
+.avatars.grid{
+  grid-gap: 0.5em;
+  grid-template-columns: repeat(auto-fit, minmax(48px, 1fr));
+}
+
+.avatar.selected{
+  outline: 2px solid $primary;
+  border: 3px solid $white;
+}
+
 // input date picker
 .flatpickr-calendar {
   overflow: hidden;

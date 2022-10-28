@@ -9,4 +9,12 @@ $(document).ready(function () {
     console.log("body");
     $(".popup-menu").hide(); //hide modal
   });
+
+  $(".selectable").on('click', function (e) {
+    e.stopPropagation()
+    $(".selectable").removeClass("selected");
+    $(this).addClass("selected");
+    console.log($("#avatar-btn"))
+    $("#avatar-btn").attr("href", `/users/edit/avatar/${$(this).attr("id")}`)
+   })
 });

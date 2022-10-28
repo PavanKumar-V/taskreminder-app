@@ -1,12 +1,55 @@
+<%
+def is_edit_page(path)
+    if request.path == path
+      return true
+    else
+      return false
+    end
+  end
+%>
 <div class="sidebar sidebar-right bl-2 flex f-c f-start">
-  <form class="p-1" style="margin-top: 50px" data-turbolinks="false">
-    <h4>Pick Date</h4>
-    <div class="input-field">
-      <input type="text" name="date" id="date" class="date-picker-calendar" placeholder="select date.." readonly>
-    </div>
-    <a href="/tasks/date/<%= Time.now.strftime("%Y-%m-%d")%>" class="btn btn-md btn-dark mt-2"  id="get-tasks">Get Tasks</a>
-  </form>
-
-
+  <div class="" style="margin-top: 50px">
+    <% if is_edit_page(edit_user_registration_path) %>
+      <div class="py-2">
+        <div class="mb-4">
+          <h4 class="hd-md">Select Avatars</h4>
+          <div class="avatars grid mt-2 mb-2">
+            <% @avatars.each do |avatar| %>
+              <%= image_tag avatar.image, class: "avatar selectable", id: avatar.id %>
+            <% end %>
+          </div>
+          <%= link_to "Change Avatar", "/users/edit/", method: :patch , class: "btn btn-md btn-dark", id: "avatar-btn" %>
+          <%# <a class="btn btn-md btn-dark" href="" id="avatar-btn">Change Avatar</a> %>
+        </div>
+        <div class="p-1 border-dashed rounded-md mb-2">
+          <h3>Upload New Avatar</h3>
+          <%= form_with(model: @avatarObj) do |form| %>
+            <% if @avatarObj.errors.any? %>
+              <div style="color: red">
+                <h2><%= pluralize(@avatarObj.errors.count, "error") %> prohibited this avatar from being saved:</h2>
+                <ul>
+                  <% @avatarObj.errors.each do |error| %>
+                    <li><%= error.full_message %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+            <%= form.file_field :image %>
+            <div>
+              <%= form.submit "Upload Avatar", class: "btn btn-md btn-dark"  %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% else %>
+      <form class="p-1"  data-turbolinks="false">
+        <h4>Pick Date</h4>
+        <div class="input-field">
+          <input type="text" name="date" id="date" class="date-picker-calendar" placeholder="select date.." readonly>
+        </div>
+        <a href="/tasks/date/<%= Time.now.strftime("%Y-%m-%d")%>" class="btn btn-md btn-dark mt-2"  id="get-tasks">Get Tasks</a>
+      </form>
+    <% end %>
+  </div>
 </div>
 </div>

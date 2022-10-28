@@ -1,6 +1,13 @@
 <div class="">
+
   <div class="mb-4">
+     <% if @avatar && @avatar.image.attached? %>
+    <%= image_tag @avatar.image, class: "avatar-lg rounded-o", id: "popup-toggler" %>
+    <% else %>
     <%= image_tag "avatar.png", class: "avatar-lg rounded-o", id: "popup-toggler" %>
+
+    <% end %>
+
     <h1 class="hd-lg  capitize text-bl"><%= @user.full_name %></h1>
     <p class="px-1 py-2 text-center bg-p rounded-lg text-w display-inline" ><%= @user.email %></p>
   </div>

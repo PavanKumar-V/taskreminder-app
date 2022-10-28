@@ -13,7 +13,7 @@ def is_current(path)
   <%# Title and poup menu %>
   <div class="flex f-space-between">
     <div class="flex f-c f-start">
-      <h6 class="hd-md text-w capitize <%= task.is_completed ? " text-line-through " : " "%>"><%= task.title.size > 15 ? (task.title[0..8] + "...") : task.title %></h6>
+      <h6 class="hd-md text-w capitize <%= task.is_completed ? " text-line-through " : " "%>"><%= task.title.size > 13 ? (task.title[0..10] + "...") : task.title %></h6>
       <% if task.title.size > 15 %>
         <p class='text-w-hint capitize'> <%= task.title %></p>
       <% end %>

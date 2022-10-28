@@ -21,6 +21,22 @@ select {
   transition: all 0.2s ease-in;
 }
 
+input[type="file"]{
+  border: none;
+  outline: none;
+  // background-color: $primary;
+}
+::-webkit-file-upload-button{
+  border: none;
+  font-size: 14px;
+  color: $white;
+  background-color: $primary;
+  padding: 10px 16px;
+  border-radius: 10px;
+  margin: 1em 0px;
+  cursor: pointer;
+}
+
 input[value].input-slate, textarea.input-slate{
   font-size: 18px;
   font-weight: 500;

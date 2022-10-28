@@ -4,6 +4,7 @@
       <%# child 1 %>
       <div class="nav-brand">
         <div class="flex f-center">
+
           <%= image_tag "logo.png", class: "logo" %>
           <h6 class="hd-sm">Chore</h6>
         </div>
@@ -16,7 +17,11 @@
       <% end %>
       <%# child 2 %>
       <div>
+        <% if @avatar && @avatar.image.attached? %>
+        <%= image_tag @avatar.image, class: "avatar cursor-p", id: "popup-toggler" %>
+        <% else %>
         <%= image_tag "avatar.png", class: "avatar cursor-p", id: "popup-toggler" %>
+        <% end %>
         <div class="popup-menu display-none" >
           <ul>
             <li class="popup-link">  <%= link_to "Account", edit_user_registration_path%></li>
