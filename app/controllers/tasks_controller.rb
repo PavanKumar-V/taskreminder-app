@@ -56,13 +56,15 @@ class TasksController < ApplicationController
 
   # DELETE /tasks/1 or /tasks/1.json
   def destroy
-    @task = Task.find(params[:id])
-    @task.destroy
-
-    respond_to do |format|
-      format.html { redirect_to tasks_url, notice: "Task was successfully destroyed." }
-      format.json { head :no_content }
+    user = User.find(current_user.id)
+    task = user.tasks.find(params[:id])
+    if task
+      task.destroy
+      redirect_to "/tasks" , notice: "Task deleted"
+    else
+      redirect_to "/tasks" , notice: "Task could not be deleted"
     end
+
   end
 
   # PUT/PATCH /tasks/1
@@ -79,10 +81,10 @@ class TasksController < ApplicationController
 
    # GET /tasks/date/2022-10-19
    def get_tasks_by_date
-    @user = User.find(current_user.id)
+    user = User.find(current_user.id)
     if params[:date]
       next_day_date = Date.parse(params[:date]).strftime("%Y-%m-%d").next;
-      @tasks = current_user.tasks.where(start_date: (params[:date])..("#{next_day_date}"))
+      @tasks = user.tasks.where(start_date: (params[:date])..("#{next_day_date}"))
       @date = params[:date]
       render :index
     else

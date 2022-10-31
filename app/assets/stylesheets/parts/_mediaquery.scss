@@ -4,10 +4,19 @@
     padding: 0px 10px;
   }
 
+  .sidebar-right {
+    width: 320px;
+  }
+
 }
 @media only screen and (max-width: $tablet-size) {
   .sidebar-right {
     display: none;
+  }
+
+  .sb {
+    width: 60px !important;
+    top: 35vh !important;
   }
 
   .sidebar {
@@ -30,11 +39,7 @@
     display: block !important;
   }
 
-  .main {
-    width: 100%;
-    margin-left: 70px;
-    margin-right: 10px;
-  }
+
 
 }
 @media only screen and (max-width: $mobile-size) {

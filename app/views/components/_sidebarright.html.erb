@@ -7,10 +7,10 @@ def is_edit_page(path)
     end
   end
 %>
-<div class="sidebar sidebar-right bl-2 flex f-c f-start">
-  <div class="" style="margin-top: 50px">
+<div class="sidebar sidebar-right pos-">
+  <div class="side-nav bl-2 flex f-c f-start" style="margin-top: 50px">
     <% if is_edit_page(edit_user_registration_path) %>
-      <div class="py-2">
+      <div class="py-2 pos-fix">
         <div class="mb-4">
           <h4 class="hd-md">Select Avatars</h4>
           <div class="avatars grid mt-2 mb-2">
@@ -42,7 +42,7 @@ def is_edit_page(path)
         </div>
       </div>
     <% else %>
-      <form class="p-1"  data-turbolinks="false">
+      <form class="p-1 pos-fix"  data-turbolinks="false">
         <h4>Pick Date</h4>
         <div class="input-field">
           <input type="text" name="date" id="date" class="date-picker-calendar" placeholder="select date.." readonly>

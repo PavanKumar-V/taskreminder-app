@@ -331,6 +331,14 @@
   flex-direction: column;
 }
 
+.f-d {
+  flex-direction: row;
+}
+
+.f-jc-sb {
+  justify-content: space-between;
+}
+
 .f-start {
   justify-content: start !important;
   align-items: flex-start !important;
@@ -358,7 +366,6 @@
   display: grid;
 }
 
-
 // position
 .pos-abs {
   position: absolute;
@@ -369,9 +376,11 @@
 
 .pos-fix {
   position: fixed;
-  top: 0;
-  right: 0;
-  z-index: 100;
+}
+
+.pos-sticky {
+  position: sticky;
+
 }
 
 .pos-rel {

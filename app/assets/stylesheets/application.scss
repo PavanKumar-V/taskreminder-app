@@ -5,7 +5,7 @@
 
 // colors
 $primary: #5a3ac9;
-$primaryDark: #150C35;
+$primaryDark: #150c35;
 $onPrimary: #fff;
 $secondary: #da6b3e;
 $white: #fff;
@@ -25,9 +25,9 @@ $error: #c93a3a;
 $success: #0fca90;
 
 // media sizes
-$desktop-size : 1224px;
-$tablet-size : 820px;
-$mobile-size : 540px;
+$desktop-size: 1224px;
+$tablet-size: 820px;
+$mobile-size: 540px;
 
 // universal styling
 * {
@@ -61,13 +61,9 @@ a {
 
 // main area
 .main {
-  width: 100%;
-  max-width: 1000px;
   margin-top: 48px;
-  margin-left: 150px;
-  margin-right: 150px;
-
-
+  min-width: 0;
+  flex: 1 1 auto;
 }
 // navbar
 nav {
@@ -85,9 +81,6 @@ nav {
   justify-content: space-between;
   align-items: center;
   height: 100%;
-
-
-
 }
 
 .avatar {
@@ -96,7 +89,7 @@ nav {
   height: 40px;
   border-radius: 100%;
 
-  &-lg{
+  &-lg {
     width: 200px;
     height: 200px;
   }
@@ -112,13 +105,20 @@ nav {
 
 .sidebar {
   min-width: 150px;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
+  min-height: 100vh;
+  flex-shrink: 1;
   background-color: $white;
+  .side-nav {
+    height: 100%;
+    position: relative;
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
 
+    .pos-fix {
+      top: 48px;
+    }
+  }
   ul {
     width: 100%;
   }
@@ -153,18 +153,23 @@ nav {
   }
 }
 
-.sidebar-right {
-  // position: absolute !important;
-  min-width: 200px;
-  right: 0;
+.sb {
+  width: 149px !important;
+  top: 35vh !important;
 }
 
+.sidebar-right {
+  // position: absolute !important;
+  width: 316px;
+}
+.md-m-0{
+
+}
 // task section
 
 .task-card {
   position: relative;
-  min-width: 300px;
-  max-width: 400px;
+  max-width: 350px;
 }
 
 // popup menu
@@ -205,18 +210,18 @@ nav {
 }
 
 // task cards
-.tasks.grid{
+.tasks.grid {
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 10px;
 }
 
 //avatars
-.avatars.grid{
+.avatars.grid {
   grid-gap: 0.5em;
   grid-template-columns: repeat(auto-fit, minmax(48px, 1fr));
 }
 
-.avatar.selected{
+.avatar.selected {
   outline: 2px solid $primary;
   border: 3px solid $white;
 }

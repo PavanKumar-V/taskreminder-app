@@ -19,14 +19,14 @@
     <% if user_signed_in? %>
       <%= render 'components/navbar' %>
       <%# Container %>
-      <div class="container">
-        <div class="flex f-wrap pos-rel">
+      <div class="container pos-rel">
+        <div class="flex f-jc-sb">
           <%# left sidebar %>
           <%= render 'components/sidebar' %>
           <%# main content %>
-          <div class="main p-2">
+          <main class="main p-2">
             <%= yield %>
-          </div>
+          </main>
           <%# right sidebar %>
           <%= render 'components/sidebarright' %>
         </div>
