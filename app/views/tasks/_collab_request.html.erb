@@ -1,0 +1,23 @@
+<div class="bg-c p-2 rounded-lg flex f-c mb-2">
+  <div class="flex f-center mb-2">
+    <%= image_tag collab.image, class: "avatar avatar-md mr-1" %>
+    <div class="flex f-c">
+    <h4 class="capitize"><%= collab.full_name %></h4>
+    <p class="text-sm"><%= collab.email %></p>
+    </div>
+  </div>
+  <p class="text-sm mb-1"><%= collab.full_name %> has requested you to do collaboration with a task.</p>
+  <h3 class="mb-2"><%= collab.title %></h3>
+    <p class="text-sm">Accept before</p>
+  <div class="flex f-center mb-3">
+    <span class="material-symbols-outlined mr-1 text-md">
+      calendar_month
+    </span>
+    <p class="text-bl text-sm"><%= Date.parse(collab.end_date).strftime("%^b %d, %Y %I:%M %p") %></p>
+  </div>
+
+  <div class="flex jc-sb w-100">
+    <%= link_to "Accept",accept_request_path({task_id: collab.task_id}), method: :patch, class: "btn btn-success w-100 mr-1" %>
+    <%= link_to "Reject",reject_request_path({task_id: collab.task_id}), method: :patch, class: "btn btn-danger w-100 ml-1" %>
+  </div>
+</div>

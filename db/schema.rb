@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_28_110750) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_31_105833) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -42,6 +42,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_28_110750) do
   create_table "avatars", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "collaborators", force: :cascade do |t|
+    t.integer "task_id", null: false
+    t.integer "user_id", null: false
+    t.boolean "is_accepted"
+    t.boolean "is_completed"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["task_id"], name: "index_collaborators_on_task_id"
+    t.index ["user_id"], name: "index_collaborators_on_user_id"
   end
 
   create_table "starred_tasks", force: :cascade do |t|
@@ -82,6 +93,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_28_110750) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "collaborators", "tasks"
+  add_foreign_key "collaborators", "users"
   add_foreign_key "starred_tasks", "tasks"
   add_foreign_key "starred_tasks", "users"
   add_foreign_key "tasks", "users"

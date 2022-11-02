@@ -371,7 +371,7 @@
   position: absolute;
   top: 0;
   right: 0;
-  z-index: 100;
+  z-index: 1;
 }
 
 .pos-fix {
@@ -380,7 +380,6 @@
 
 .pos-sticky {
   position: sticky;
-
 }
 
 .pos-rel {
@@ -412,4 +411,54 @@
 .border-dashed {
   border: 2px solid $primary;
   border-style: dashed;
+}
+
+// overflow
+.overflow-scroll {
+  overflow: scroll;
+
+
+}
+
+// scroll
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba($primaryDark, 0.8);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba($primary, 0.3);
+}
+
+ /* width */
+ .overflow-scroll::-webkit-scrollbar {
+  width: 0px;
+}
+
+/* Track */
+.overflow-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+.overflow-scroll::-webkit-scrollbar-thumb {
+  width: 0px;
+  background: $primary;
+}
+
+/* Handle on hover */
+.overflow-scroll::-webkit-scrollbar-thumb:hover {
+  background: $primary;
 }

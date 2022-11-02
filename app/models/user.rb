@@ -4,6 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   has_one :avatar
-  has_many :tasks, dependent: :destroy 
+  has_many :collaborators, dependent: :destroy
+  has_many :tasks, dependent: :destroy
   has_many :starred_tasks
 end

@@ -9,10 +9,15 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "tasks#index"
+
   patch "/users/edit/avatar/:id", to: "application#change_avatar"
   get "/tasks/date/:date", to: "tasks#get_tasks_by_date", as: "tasks_by_date"
   patch "/tasks/:id/task_complete", to: "tasks#mark_complete"
-  # get "/tasks/search/:search", to: "tasks#search_tasks", as: "search_tasks"
+
+  # collab
+  get "/collab", to: "tasks#collab_requests", as: "collab_request"
+  patch "/collab/accept/:task_id", to: "collaborators#accept_request", as: "accept_request"
+  patch "/collab/reject/:task_id", to: "collaborators#reject_request", as: "reject_request"
 
 
   # starred tasks

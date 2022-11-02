@@ -6,5 +6,7 @@ class Task < ApplicationRecord
   validates_length_of :title, minimum: 8, maximum: 20
 
   belongs_to :user
-  has_many :starred_tasks, dependent: :destroy 
+  has_many :starred_tasks, dependent: :destroy
+  has_many :collaborators, dependent: :destroy
+
 end

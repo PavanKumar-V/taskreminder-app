@@ -13,8 +13,14 @@
     <%= javascript_importmap_tags %>
   </head>
   <body>
-    <p class="pos-fix bg-w" style="top: 80px; right:20px"><%= notice %></p>
-    <p class="pos-fix bg-w" style="top: 80px; right:20px"><%= alert %></p>
+    <% if notice || alert %>
+      <div class="flex f-center pos-fix bg-w alert rounded" style="top: 50px; left:20px; z-index: 200;">
+        <p class=" " ><%= notice ? notice : alert %></p>
+        <span class="material-symbols-outlined ml-2 cursor-p" id="close">
+          close
+        </span>
+      </div>
+    <% end %>
     <%# Navbar %>
     <% if user_signed_in? %>
       <%= render 'components/navbar' %>

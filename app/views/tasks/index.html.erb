@@ -20,7 +20,8 @@
       </span>
     </div>
   </div>
-  <% if @tasks.size() > 0 %>
+  
+  <% if @tasks && @tasks.size() > 0 %>
     <div class="tasks grid">
       <% @tasks.each do |task| %>
         <% unless task.is_completed %>

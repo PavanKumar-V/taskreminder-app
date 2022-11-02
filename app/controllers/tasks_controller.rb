@@ -8,11 +8,16 @@ class TasksController < ApplicationController
       @tasks = current_user.tasks.where(["title LIKE ?","%#{params[:search]}%"])
     else
       @tasks = current_user.tasks.where(start_date: (Time.now)..(Time.now.next_day)).order("start_date DESC");
-      # @tasks = Task.all.where(start_date: (Time.now)..(Time.now.next_day)).order("start_date DESC");
     end
   end
 
-
+  # collaborators
+  # GET /tasks/collabrequests
+  def collab_requests
+    @collab_requests = Avatar.joins("inner join users on avatars.id = users.avatar_id inner join tasks on tasks.user_id = users.id inner join collaborators on collaborators.task_id = tasks.id").select("users.full_name, users.email, avatars.*,tasks.id as task_id, tasks.title, tasks.end_date").where("collaborators.user_id = #{current_user.id} and collaborators.is_accepted != true")
+    @tasks = current_user.tasks.where(start_date: (Time.now)..(Time.now.next_day)).order("start_date DESC");
+    render :index, notice: "collab requests updated"
+  end
 
   # GET /tasks/new
   def new
@@ -83,7 +88,7 @@ class TasksController < ApplicationController
    def get_tasks_by_date
     user = User.find(current_user.id)
     if params[:date]
-      next_day_date = Date.parse(params[:date]).strftime("%Y-%m-%d").next;
+      next_day_date = Date.parse(Date.parse(params[:date]).strftime("%Y-%m-%d")).next;
       @tasks = user.tasks.where(start_date: (params[:date])..("#{next_day_date}"))
       @date = params[:date]
       render :index

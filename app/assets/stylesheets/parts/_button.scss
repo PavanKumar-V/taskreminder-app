@@ -51,7 +51,23 @@
     color: $white !important;
 
     &:hover {
-      background-color: #000 in !important;
+      background-color: #000 !important;
+    }
+  }
+  &-success {
+    background-color: $success !important;
+    color: $white !important;
+
+    &:hover {
+      background-color: rgba($success, 0.8) !important;
+    }
+  }
+  &-danger {
+    background-color: $error !important;
+    color: $white !important;
+
+    &:hover {
+      background-color: rgba($error, 0.8) !important;
     }
   }
 }

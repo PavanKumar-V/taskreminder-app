@@ -4,7 +4,6 @@
       <%# child 1 %>
       <div class="nav-brand">
         <div class="flex f-center">
-
           <%= image_tag "logo.png", class: "logo" %>
           <h6 class="hd-sm">Chore</h6>
         </div>
@@ -16,16 +15,16 @@
         </div>
       <% end %>
       <%# child 2 %>
-      <div>
+      <div class="flex f-center">
         <% if @avatar && @avatar.image.attached? %>
-        <%= image_tag @avatar.image, class: "avatar cursor-p", id: "popup-toggler" %>
+          <%= image_tag @avatar.image, class: "avatar cursor-p", id: "popup-toggler" %>
         <% else %>
-        <%= image_tag "avatar.png", class: "avatar cursor-p", id: "popup-toggler" %>
+          <%= image_tag "avatar.png", class: "avatar cursor-p", id: "popup-toggler" %>
         <% end %>
         <div class="popup-menu display-none" >
           <ul>
             <li class="popup-link">  <%= link_to "Account", edit_user_registration_path%></li>
-            <li class="popup-link">Collab Requests</li>
+            <li class="popup-link"> <%= link_to "Collab Requests", collab_request_path%></li>
             <li class="popup-link">  <%= link_to "Sign out", destroy_user_session_path, method: :delete %></li>
           </ul>
         </div>
