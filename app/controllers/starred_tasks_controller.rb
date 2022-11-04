@@ -23,7 +23,7 @@ class StarredTasksController < ApplicationController
   def destroy
     task = StarredTask.find_by({task_id: params[:id], user_id: current_user.id})
     if task.destroy
-      redirect_to starred_tasks_url(@starred_tasks), notice: "Task removed";
+      redirect_to starred_tasks_url(@starred_tasks), notice: "Removed from starred";
     else
       redirect_to "/starred_task/", notice: "Task could not be removed"
     end

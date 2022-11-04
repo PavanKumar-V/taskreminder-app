@@ -20,12 +20,11 @@
       </span>
     </div>
   </div>
-  
   <% if @tasks && @tasks.size() > 0 %>
     <div class="tasks grid">
       <% @tasks.each do |task| %>
         <% unless task.is_completed %>
-          <%= render task %>
+          <%= render task, collabs: @collab_data.select{ |tasks| tasks[:task_id] == task.id }%>
         <% end %>
       <% end %>
     </div>
@@ -33,7 +32,7 @@
     <div class="tasks grid">
       <% @tasks.each do |task| %>
         <% unless !task.is_completed %>
-          <%= render task %>
+          <%= render task, collabs: @collab_data.select{ |tasks| tasks[:task_id] == task.id }%>
         <% end %>
       <% end %>
     </div>

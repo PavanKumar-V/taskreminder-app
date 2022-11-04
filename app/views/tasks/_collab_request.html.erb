@@ -17,7 +17,7 @@
   </div>
 
   <div class="flex jc-sb w-100">
-    <%= link_to "Accept",accept_request_path({task_id: collab.task_id}), method: :patch, class: "btn btn-success w-100 mr-1" %>
-    <%= link_to "Reject",reject_request_path({task_id: collab.task_id}), method: :patch, class: "btn btn-danger w-100 ml-1" %>
+    <%= link_to "Accept",accept_request_path({task_id: collab.task_id}), method: :patch, data: {"confirm": :"Are you sure?"}, class: "btn btn-success w-100 mr-1" %>
+    <%= link_to "Reject",reject_request_path({task_id: collab.task_id}), method: :patch, data: {"confirm": :"Are you sure?"},class: "btn btn-danger w-100 ml-1" %>
   </div>
 </div>

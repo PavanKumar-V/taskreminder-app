@@ -22,9 +22,7 @@
     <div class="input-field date-pickers">
       <%= form.label :start_date, style: "display: block", class: "text-b " %>
       <% if task.start_date %>
-        <script>
-
-        </script>
+        <script></script>
         <%= form.text_field :start_date , class: "date-picker", placeholder: "Select date..", value: task.start_date.strftime("%^b %-d, %Y %I:%M %p"),"data-id": task.start_date.strftime("%Y-%m-%d %H:%M"), readonly: "readonly" %>
       <% else %>
         <%= form.text_field :start_date , class: "date-picker flatpickr-input", placeholder: "Select date..", type: "text", readonly: "readonly" %>
@@ -37,6 +35,23 @@
       <% else %>
         <%= form.text_field :end_date , class: "date-picker flatpickr-input", placeholder: "Select date..", type: "text", readonly: "readonly" %>
       <% end %>
+    </div>
+  </div>
+  <div class="mb-4 w-50">
+    <h2 class="hd-md mt-4">Collaborate</h2>
+    <div class="flex f-c">
+      <div class="input_field flex f-center pos-rel">
+        <input type="email" name="collab[email][]" class="collab-email-input" id="collab[email]" placeholder="email" autocomplete="off">
+        <span class="material-symbols-outlined p-1 rounded-sm bg-p text-w ml-2 cursor-p" id="add-email-input">
+          add
+        </span>
+        <%# <div class="emails pos-abs bg-w p-1 rounded-md shadow" style="left:0 ; top: 40px;">
+          <p class="text-sm p-sm">hello@gmail.com</p>
+          <p class="text-sm p-sm">hello@gmail.com</p>
+          <p class="text-sm p-sm">hello@gmail.com</p>
+          <p class="text-sm p-sm">hello@gmail.com</p>
+        </div> %>
+      </div>
     </div>
   </div>
   <% if task.is_completed == true || task.is_completed == false%>

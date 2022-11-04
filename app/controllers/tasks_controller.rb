@@ -1,6 +1,7 @@
 class TasksController < ApplicationController
   # before_action :set_task, only: %i[ show edit update destroy mark_complete ]
   # before_action :get_user, only: %i[ new create index]
+  before_action :collab_data, only: %i[index collab_requests get_tasks_by_date]
   before_action :authenticate_user!
   # GET /tasks or /tasks.json
   def index
@@ -14,10 +15,12 @@ class TasksController < ApplicationController
   # collaborators
   # GET /tasks/collabrequests
   def collab_requests
-    @collab_requests = Avatar.joins("inner join users on avatars.id = users.avatar_id inner join tasks on tasks.user_id = users.id inner join collaborators on collaborators.task_id = tasks.id").select("users.full_name, users.email, avatars.*,tasks.id as task_id, tasks.title, tasks.end_date").where("collaborators.user_id = #{current_user.id} and collaborators.is_accepted != true")
+    @collab_requests = Avatar.joins("inner join users on avatars.id = users.avatar_id inner join tasks on tasks.user_id = users.id inner join collaborators on collaborators.task_id = tasks.id").select("users.full_name, users.email, avatars.*,tasks.id as task_id, tasks.title, tasks.end_date").where("collaborators.user_id = #{current_user.id} and collaborators.is_accepted != true").order("created_at DESC")
     @tasks = current_user.tasks.where(start_date: (Time.now)..(Time.now.next_day)).order("start_date DESC");
     render :index, notice: "collab requests updated"
   end
+
+
 
   # GET /tasks/new
   def new
@@ -31,32 +34,33 @@ class TasksController < ApplicationController
 
   # POST /tasks or /tasks.json
   def create
+    # puts params["collab"]["email"]
     user = User.find(current_user.id)
     @task = user.tasks.create(task_params)
-
-    respond_to do |format|
       if @task.save
-        format.html { redirect_to tasks_url(@tasks), notice: "Task was successfully created." }
-        format.json { render :show, status: :created, location: @task }
+        # add collab
+        params["collab"]["email"].each do |email|
+          if current_user.email != email.downcase
+            user = User.select("users.id").find_by(email: email.downcase)
+            if user
+              Collaborator.create({task_id: @task.id, user_id: user.id, is_accepted: false, is_completed: false})
+            end
+          end
+        end
+        redirect_to tasks_url(@tasks), notice: "Task was successfully created."
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
+        render :new, status: :unprocessable_entity
       end
-    end
   end
 
   # PATCH/PUT /tasks/1 or /tasks/1.json
   def update
     @task = Task.find(params[:id])
-    respond_to do |format|
       if @task.update(task_params)
-        format.html { redirect_to tasks_url(@tasks), notice: "Task was successfully updated." }
-        format.json { render :show, status: :ok, location: @task }
+     redirect_to tasks_url(@tasks), notice: "Task was successfully updated."
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
+        render :edit, status: :unprocessable_entity
       end
-    end
   end
 
   # DELETE /tasks/1 or /tasks/1.json
@@ -77,7 +81,7 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     @task.is_completed = true;
     if @task.update({:is_completed => @task.is_completed})
-      redirect_to tasks_url(@tasks)
+      redirect_to tasks_url(@tasks), notice: "Task marked completed"
     else
       render :index, status: :unprocessable_entity
     end
@@ -89,7 +93,7 @@ class TasksController < ApplicationController
     user = User.find(current_user.id)
     if params[:date]
       next_day_date = Date.parse(Date.parse(params[:date]).strftime("%Y-%m-%d")).next;
-      @tasks = user.tasks.where(start_date: (params[:date])..("#{next_day_date}"))
+      @tasks = user.tasks.where(start_date: (params[:date])..("#{next_day_date}")).order("start_date DESC");
       @date = params[:date]
       render :index
     else
@@ -107,8 +111,16 @@ class TasksController < ApplicationController
     #   @user = User.find(current_user.id)
     # end
 
+    # send collab data
+    def collab_data
+      if current_user
+        @collab_data = current_user.tasks.joins("right join collaborators on collaborators.task_id = tasks.id inner join users on users.id = collaborators.user_id").select("tasks.id as taskId, collaborators.*, users.email, users.avatar_id")
+      end
+      # @collab_data = current_user.tasks.joins("right join collaborators on collaborators.task_id = tasks.id").select("tasks.id as taskId, collaborators.*")
+    end
+
     # Only allow a list of trusted parameters through.
     def task_params
-      params.require(:task).permit(:id, :title, :description, :start_date, :end_date, :is_completed, :search, :date)
+      params.require(:task).permit(:id, :title, :description, :start_date, :end_date, :is_completed, :search, :date, email: [])
     end
 end

@@ -12,9 +12,11 @@ jQuery(function () {
     fp.setDate(new Date(`${$(this).attr("data-id")}`), "", "")
    })
 
+   var inlineCalendarDate = $("#cur-date").text()
+
   $(".date-picker-calendar").flatpickr({
     allowInput: false, // if doesn't need - disable it.
-    defaultDate: "today",
+    defaultDate: inlineCalendarDate,
     enableTime: false,
     inline: true,
     dateFormat: "Y-m-d",

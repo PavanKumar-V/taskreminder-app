@@ -21,12 +21,13 @@ select {
   transition: all 0.2s ease-in;
 }
 
-input[type="file"]{
+
+input[type="file"] {
   border: none;
   outline: none;
   // background-color: $primary;
 }
-::-webkit-file-upload-button{
+::-webkit-file-upload-button {
   border: none;
   font-size: 14px;
   color: $white;
@@ -37,16 +38,18 @@ input[type="file"]{
   cursor: pointer;
 }
 
-input[value].input-slate, textarea.input-slate{
+input[value].input-slate,
+textarea.input-slate {
   font-size: 18px;
   font-weight: 500;
 }
 
-.date-pickers input[value]{
+.date-pickers input[value] {
   font-size: 14px;
   font-weight: bold;
 }
-input:focus, textarea:focus {
+input:focus,
+textarea:focus {
   box-shadow: 0px 0px 0px 3px rgba($color: $primary, $alpha: 0.3);
 }
 
@@ -57,7 +60,6 @@ textarea {
   border: 1px solid $primary;
   transition: all 0.2s ease-in;
 }
-
 
 .input-slate {
   padding: 14px;
@@ -85,13 +87,13 @@ textarea {
   }
 }
 
-button, input[type="button"] {
+button,
+input[type="button"] {
   outline: none;
   border: none;
   font-weight: normal !important;
   letter-spacing: 1px;
 }
-
 
 // checkbox switch
 $toggle-indicator-size: 24px; // changing this number will resize the whole toggle
@@ -109,7 +111,10 @@ You'll need to replace with your own color values.
 
 */
 $track-border: $primary;
-$track-background: rgba($color: $primary, $alpha: 1);
+$track-background: rgba(
+  $color: $primary,
+  $alpha: 1,
+);
 $focus-ring: 0px 0px 0px 2px $primary;
 $speed: 0.3s;
 $dark: $black;
@@ -189,14 +194,11 @@ $dark: $black;
   background: $success;
   transform: translateX($track-width - $track-height);
 
-
   .checkMark {
     opacity: 1;
     transition: opacity $speed ease-in-out;
   }
 }
-
-
 
 @media screen and (-ms-high-contrast: active) {
   .toggle-track {

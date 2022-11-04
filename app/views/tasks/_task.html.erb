@@ -1,4 +1,7 @@
 <%# utility functions %>
+<% require "net/http"
+require 'uri'
+%>
 <%
 def is_current(path)
     if request.path == path
@@ -14,21 +17,18 @@ def is_current(path)
   <div class="flex f-space-between">
     <div class="flex f-c f-start">
       <h6 class="hd-md text-w capitize <%= task.is_completed ? " text-line-through " : " "%>"><%= task.title.size > 13 ? (task.title[0..10] + "...") : task.title %></h6>
-      <% if task.title.size > 15 %>
-        <p class='text-w-hint capitize'> <%= task.title %></p>
-      <% end %>
     </div>
     <div>
-    <span class="material-symbols-outlined cursor-p popup-toggler icon bg-w rounded-o " id="popup-toggler" style="font-weight: bolder; padding:3px;">more_vert</span>
-    <%# pop up menu %>
-  <div class="popup-menu display-none">
-    <ul>
-      <% is_starred_page =  is_current(starred_tasks_path) %>
-      <li class="popup-link"> <%= link_to  is_starred_page ? "Remove" : "Star" , is_starred_page ? remove_starred_path(task) : add_to_starred_path(task), method: is_starred_page ? :delete : :post %></li>
-      <li class="popup-link"><%= link_to "Edit", edit_task_path(task) %></li>
-      <li class="popup-link"><%= button_to "Delete", task, method: :delete, data: {"confirm": :"Are you sure?"}, class: "btn-link"%></li>
-    </ul>
-  </div>
+      <span class="material-symbols-outlined cursor-p popup-toggler icon bg-w rounded-o " id="popup-toggler" style="font-weight: bolder; padding:3px;">more_vert</span>
+      <%# pop up menu %>
+      <div class="popup-menu display-none">
+        <ul>
+          <% is_starred_page =  is_current(starred_tasks_path) %>
+          <li class="popup-link"> <%= link_to  is_starred_page ? "Remove" : "Star" , is_starred_page ? remove_starred_path(task) : add_to_starred_path(task), method: is_starred_page ? :delete : :post %></li>
+          <li class="popup-link"><%= link_to "Edit", edit_task_path(task) %></li>
+          <li class="popup-link"><%= button_to "Delete", task, method: :delete, data: {"confirm": :"Are you sure?"}, class: "btn-link"%></li>
+        </ul>
+      </div>
     </div>
   </div>
   <%# due date %>
@@ -44,12 +44,25 @@ def is_current(path)
   </div>
   <%# bottom section collaborators and button action %>
   <div class="flex f-space-between mt-3 ">
-    <div class="flex">
-      <p class=" text-w-hint">collaborators</p>
-    </div>
+    <% if collabs.size() > 0 %>
+      <div class="flex f-c">
+        <p class=" text-w-hint">collaborators</p>
+        <div class="flex">
+          <div class="avatars-stack pos-rel">
+            <% collabs.each do |collab| %>
+              <% if collab.avatar_id != nil %>
+                <% res = JSON.parse(Net::HTTP.get(URI.parse("http://localhost:3000/avatars/#{collab.avatar_id}")))["image"] %>
+                <img src="<%= res %>" class="avatar avatar-sm stacked-avatar m-0" alt="">
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% else %>
+      <p class=" text-w-hint"> No collaborators</p>
+    <% end %>
     <% if !task.is_completed %>
-      <%= link_to "Mark Complete", "/tasks/#{task.id}/task_complete", method: :patch, class: "btn btn-peace" %>
+      <%= link_to "Mark Complete", "/tasks/#{task.id}/task_complete", method: :patch,data: {"confirm": :"Are you sure?"}, class: "btn btn-peace" %>
     <% end %>
   </div>
-
 </div>

@@ -5,5 +5,7 @@ import "jquery"
 import "jquery_ujs"
 import "custom/flatpickr"
 import "custom/uitilities"
+import "custom/network"
+import "custom/demo"
 import "custom/datePicker"
 

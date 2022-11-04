@@ -51,9 +51,9 @@ def is_collab_request_page(path)
         </div>
       </div>
     <% elsif is_collab_request_page(collab_request_path) %>
-      <div class="p-1 pos-fix" style="width: -webkit-fill-available;">
+      <div class="p-1 pos-fix">
         <h4 class="hd-md mb-2 ">Collab Requests</h4>
-        <div class="overflow-scroll" style="height: 85vh;">
+        <div class="overflow-scroll" >
           <% if @collab_requests.size() > 0%>
             <% @collab_requests.each do |collab| %>
               <%= render :partial => "tasks/collab_request", :locals => {collab: collab } %>

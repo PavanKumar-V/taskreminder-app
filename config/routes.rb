@@ -19,6 +19,9 @@ Rails.application.routes.draw do
   patch "/collab/accept/:task_id", to: "collaborators#accept_request", as: "accept_request"
   patch "/collab/reject/:task_id", to: "collaborators#reject_request", as: "reject_request"
 
+  # collab email
+  get "/collab/emails/:email_string", to: "collaborators#get_emails"
+
 
   # starred tasks
   get "/starred_tasks/", to: "starred_tasks#index"

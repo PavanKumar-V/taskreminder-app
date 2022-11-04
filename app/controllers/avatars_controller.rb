@@ -1,5 +1,7 @@
 class AvatarsController < ApplicationController
   before_action :set_avatar, only: %i[ show edit update destroy ]
+  # before_action :authenticate_user!
+
 
   # GET /avatars or /avatars.json
   def index
@@ -8,7 +10,11 @@ class AvatarsController < ApplicationController
 
   # GET /avatars/1 or /avatars/1.json
   def show
+    avatar = Avatar.find(params[:id])
+    render :json => {:image => url_for(avatar.image)}
   end
+
+  # GET /avatat/
 
   # GET /avatars/new
   def new
