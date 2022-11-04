@@ -1,6 +1,6 @@
 <div class="bg-c p-2 rounded-lg flex f-c mb-2">
   <div class="flex f-center mb-2">
-    <%= image_tag collab.image, class: "avatar avatar-md mr-1" %>
+    <%= image_tag collab.avatar_url, class: "avatar avatar-md mr-1" %>
     <div class="flex f-c">
     <h4 class="capitize"><%= collab.full_name %></h4>
     <p class="text-sm"><%= collab.email %></p>
@@ -13,7 +13,7 @@
     <span class="material-symbols-outlined mr-1 text-md">
       calendar_month
     </span>
-    <p class="text-bl text-sm"><%= Date.parse(collab.end_date).strftime("%^b %d, %Y %I:%M %p") %></p>
+    <p class="text-bl text-sm"><%= collab.end_date.strftime("%^b %d, %Y %I:%M %p") %></p>
   </div>
 
   <div class="flex jc-sb w-100">

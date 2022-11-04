@@ -15,7 +15,8 @@ class TasksController < ApplicationController
   # collaborators
   # GET /tasks/collabrequests
   def collab_requests
-    @collab_requests = Avatar.joins("inner join users on avatars.id = users.avatar_id inner join tasks on tasks.user_id = users.id inner join collaborators on collaborators.task_id = tasks.id").select("users.full_name, users.email, avatars.*,tasks.id as task_id, tasks.title, tasks.end_date").where("collaborators.user_id = #{current_user.id} and collaborators.is_accepted != true").order("created_at DESC")
+    @collab_requests = Task.joins(:user, :collaborators).joins("inner join avatars on avatars.id = users.avatar_id").select("collaborators.task_id, tasks.title, tasks.end_date, users.full_name, users.email, avatars.avatar_url").where("collaborators.user_id = #{current_user.id} and collaborators.is_accepted != true").order("collaborators.created_at DESC")
+    # @collab_requests = Avatar.joins("inner join users on avatars.id = users.avatar_id inner join tasks on tasks.user_id = users.id inner join collaborators on collaborators.task_id = tasks.id").select("users.full_name, users.email, avatars.*,tasks.id as task_id, tasks.title, tasks.end_date").where("collaborators.user_id = #{current_user.id} and collaborators.is_accepted != true").order("created_at DESC")
     @tasks = current_user.tasks.where(start_date: (Time.now)..(Time.now.next_day)).order("start_date DESC");
     render :index, notice: "collab requests updated"
   end
@@ -114,7 +115,7 @@ class TasksController < ApplicationController
     # send collab data
     def collab_data
       if current_user
-        @collab_data = current_user.tasks.joins("right join collaborators on collaborators.task_id = tasks.id inner join users on users.id = collaborators.user_id").select("tasks.id as taskId, collaborators.*, users.email, users.avatar_id")
+        @collab_data = current_user.tasks.joins("right join collaborators on collaborators.task_id = tasks.id inner join users on users.id = collaborators.user_id left join avatars on avatars.id = users.avatar_id").select("tasks.id as taskId, collaborators.*, users.email, avatars.avatar_url")
       end
       # @collab_data = current_user.tasks.joins("right join collaborators on collaborators.task_id = tasks.id").select("tasks.id as taskId, collaborators.*")
     end

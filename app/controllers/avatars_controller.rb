@@ -31,6 +31,7 @@ class AvatarsController < ApplicationController
 
     respond_to do |format|
       if @avatar.save
+        @avatar.update({avatar_url: url_for(@avatar.image)})
         format.html { redirect_to "/users/edit", notice: "Avatar was successfully created." }
         format.json { render :show, status: :created, location: @avatar }
       else

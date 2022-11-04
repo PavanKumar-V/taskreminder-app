@@ -1,7 +1,4 @@
 <%# utility functions %>
-<% require "net/http"
-require 'uri'
-%>
 <%
 def is_current(path)
     if request.path == path
@@ -50,9 +47,10 @@ def is_current(path)
         <div class="flex">
           <div class="avatars-stack pos-rel">
             <% collabs.each do |collab| %>
-              <% if collab.avatar_id != nil %>
-                <% res = JSON.parse(Net::HTTP.get(URI.parse("http://localhost:3000/avatars/#{collab.avatar_id}")))["image"] %>
-                <img src="<%= res %>" class="avatar avatar-sm stacked-avatar m-0" alt="">
+              <% if collab.avatar_url != nil %>
+                <img src="<%= collab.avatar_url %>" class="avatar avatar-sm stacked-avatar m-0" alt="">
+              <% else %>
+                <%= image_tag "avatar.png", class: "avatar avatar-sm stacked-avatar m-0" %>
               <% end %>
             <% end %>
           </div>
