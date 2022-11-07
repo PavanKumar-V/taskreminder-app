@@ -4,6 +4,7 @@ class TasksController < ApplicationController
   before_action :collab_data, only: %i[index collab_requests get_tasks_by_date]
   before_action :collab_tasks, only: %i[index collab_requests get_tasks_by_date]
   before_action :before_show, only: %i[show]
+  before_action :get_tasks, only: %i[collab_requests]
   before_action :authenticate_user!
   # GET /tasks or /tasks.json
   def index
@@ -18,7 +19,6 @@ class TasksController < ApplicationController
   # GET /tasks/collabrequests
   def collab_requests
     @collab_requests = Task.joins(:user, :collaborators).joins("inner join avatars on avatars.id = users.avatar_id").select("collaborators.task_id, tasks.title, tasks.end_date, users.full_name, users.email, avatars.avatar_url").where("collaborators.user_id = #{current_user.id} and collaborators.is_accepted != true").order("collaborators.created_at DESC")
-    @tasks = current_user.tasks.where(start_date: (Time.now)..(Time.now.next_day)).order("start_date DESC");
     render :index, notice: "collab requests updated"
   end
 
@@ -98,17 +98,17 @@ class TasksController < ApplicationController
   end
 
 
-   # GET /tasks/date/2022-10-19
-   def get_tasks_by_date
-    if params[:date]
-      next_day_date = Date.parse(Date.parse(params[:date]).strftime("%Y-%m-%d")).next;
-      @tasks = current_user.tasks.where(start_date: (params[:date])..("#{next_day_date}")).order("start_date DESC");
-      @date = params[:date]
-      render :index
-    else
-      redirect_to tasks_url(@tasks), notice: "specify date"
-    end
-   end
+  # GET /tasks/date/2022-10-19
+  def get_tasks_by_date
+  if params[:date]
+    next_day_date = Date.parse(Date.parse(params[:date]).strftime("%Y-%m-%d")).next;
+    @tasks = current_user.tasks.where(start_date: (params[:date])..("#{next_day_date}")).order("start_date DESC");
+    @date = params[:date]
+    render :index
+  else
+    redirect_to tasks_url(@tasks), notice: "specify date"
+  end
+  end
 
 
   #  add collab
@@ -129,8 +129,14 @@ class TasksController < ApplicationController
       end
     end
   end
+
+
   private
     # # Use callbacks to share common setup or constraints between actions.
+
+    def get_tasks
+      @tasks = current_user.tasks.where(start_date: Date.parse("#{Time.now}")..Date.parse("#{Time.now}").next).order("start_date DESC");
+    end
     def set_task
       begin
         # do something dodgy
@@ -148,7 +154,7 @@ class TasksController < ApplicationController
     # send collab data
     def collab_data
       if current_user
-        @collab_data = current_user.tasks.joins("right join collaborators on collaborators.task_id = tasks.id inner join users on users.id = collaborators.user_id left join avatars on avatars.id = users.avatar_id").select("tasks.id as taskId, collaborators.*, users.email, avatars.avatar_url").where("collaborators.is_accepted = true")
+        @collab_data = current_user.tasks.joins("right join collaborators on collaborators.task_id = tasks.id inner join users on users.id = collaborators.user_id left join avatars on avatars.id = users.avatar_id").select("tasks.id as taskId, collaborators.*, users.email, avatars.avatar_url").where(start_date: Date.parse("#{Time.now}")..Date.parse("#{Time.now}").next).where("collaborators.is_accepted = true")
       end
     end
 

@@ -2,7 +2,8 @@ class StarredTasksController < ApplicationController
   before_action :authenticate_user!
 #  GET /starred_tasks/
   def index
-    @collab_data = current_user.tasks.joins(:starred_tasks).joins("right join collaborators on collaborators.task_id = starred_tasks.task_id inner join users on users.id = collaborators.user_id left join avatars on avatars.id = users.avatar_id").select("tasks.id as taskId, collaborators.*, users.email, avatars.avatar_url").where("collaborators.is_accepted = true")
+    @collab_data = current_user.tasks.joins("right join collaborators on collaborators.task_id = tasks.id inner join users on users.id = collaborators.user_id left join avatars on avatars.id = users.avatar_id").select("tasks.id as taskId, collaborators.*, users.email, avatars.avatar_url").where("collaborators.is_accepted = true")
+    puts @collab_data.inspect
     @starred_tasks = Task.joins(:starred_tasks).where("starred_tasks.user_id = #{current_user.id}").order("start_date DESC");
   end
 

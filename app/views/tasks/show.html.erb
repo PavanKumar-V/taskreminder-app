@@ -9,16 +9,18 @@
   <div class="w-100">
     <h1 class="capitize mb-3"><%= @task.title %></h1>
     <h3>Description</h3>
-    <p class="text-md mt-2"><%= @task.description %></p>
+    <div class="flex f-c p-2 bg-c rounded-sm" style="min-width: 300px; max-width: 700px">
+      <p class="text-md mt-2 flex" style="line-height: 1.5;"><%= @task.description %></p>
+    </div>
     <br>
     <div class="flex f-center f-jc-sb">
       <div>
         <h5>Start Date</h5>
-        <p class="text-md mt-2"><%= @task.start_date.strftime("%b %d, %Y %I:%M %p") %></p>
+        <p class="text-md mt-2 p-1 rounded bg-c"><%= @task.start_date.strftime("%b %d, %Y %I:%M %p") %></p>
       </div>
       <div>
         <h5>End Date</h5>
-        <p class="text-md mt-2"><%= @task.end_date.strftime("%b %d, %Y %I:%M %p") %></p>
+        <p class="text-md mt-2 p-1 rounded bg-c"><%= @task.end_date.strftime("%b %d, %Y %I:%M %p") %></p>
       </div>
     </div>
     <br>
@@ -41,7 +43,7 @@
       <% @collaborators.each do |collab| %>
         <% unless collab.is_accepted  %>
           <div class="flex f-center f-jc-sb mb-1">
-            <div class="flex f-center-vh">
+            <div class="flex f-center">
               <%= image_tag collab.avatar_url, class: "avatar avatar-sm" %>
               <p class="text-md ml-2"><%= collab.email %></p>
             </div>
