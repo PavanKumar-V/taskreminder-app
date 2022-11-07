@@ -9,7 +9,7 @@ def is_current(path)
   end
 %>
 <%# Task Card %>
-<div class="card p-2 cursor-p <%= task.is_completed ? " bg-s " : " bg-p "  %>  rounded-lg task-card" id="<%= dom_id task %>" >
+<div class="card p-2 <%= task.is_completed ? " bg-s " : " bg-p "  %>  rounded-lg task-card" id="<%= dom_id task %>" >
   <%# Title and poup menu %>
   <div class="flex f-space-between">
     <div class="flex f-c f-start">
@@ -66,10 +66,6 @@ def is_current(path)
           </div>
         </div>
       </div>
-    <% elsif collab_task %>
-      <%= link_to "view", show_task_path(task.id), class: "test-sm text-w-hint cursor-p" %>
-    <% else %>
-      <p class=" text-w-hint"> No collaborators</p>
     <% end %>
     <%#  %>
     <%#  %>
