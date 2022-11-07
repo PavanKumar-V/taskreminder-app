@@ -23,7 +23,7 @@
       <%= form.label :start_date, style: "display: block", class: "text-b " %>
       <% if task.start_date %>
         <script></script>
-        <%= form.text_field :start_date , class: "date-picker", placeholder: "Select date..", value: task.start_date.strftime("%^b %-d, %Y %I:%M %p"),"data-id": task.start_date.strftime("%Y-%m-%d %H:%M"), readonly: "readonly" %>
+        <%= form.text_field :start_date , class: "start-date flatpickr-input", placeholder: "Select date..", value: task.start_date.strftime("%^b %-d, %Y %I:%M %p"),"data-id": task.start_date.strftime("%Y-%m-%d %H:%M"), readonly: "readonly" %>
       <% else %>
         <%= form.text_field :start_date , class: "date-picker flatpickr-input", placeholder: "Select date..", type: "text", readonly: "readonly" %>
       <% end %>
@@ -31,30 +31,45 @@
     <div class="input-field date-pickers">
       <%= form.label :end_date, style: "display: block", class: "text-b " %>
       <% if task.end_date %>
-        <%= form.text_field :end_date , class: "date-picker flatpickr-input", placeholder: "Select date..", type: "text", value: task.end_date.strftime("%^b %-d, %Y %I:%M %p"), readonly: "readonly" %>
+        <%= form.text_field :end_date , class: "end-date flatpickr-input", placeholder: "Select date..", type: "text", value: task.end_date.strftime("%^b %-d, %Y %I:%M %p"), readonly: "readonly" %>
       <% else %>
         <%= form.text_field :end_date , class: "date-picker flatpickr-input", placeholder: "Select date..", type: "text", readonly: "readonly" %>
       <% end %>
     </div>
   </div>
-  <div class="mb-4 w-50">
-    <h2 class="hd-md mt-4">Collaborate</h2>
+  <%# edit Collab %>
+  <% if request.path != new_task_path %>
+    <div class="collaborators mb-3" style="max-width: 500px;">
+      <h3 class="hd-md">Collaborators</h3>
+      <div class="flex f-c">
+        <% @collaborators.each do |collaborator| %>
+          <div class="input_field flex f-center mb-2 pos-rel">
+            <input type="email" name="collab[existing_emails][]" value="<%= collaborator.email%>" class="collab-email-input" id="collab[existing_emails]" placeholder="email" readonly>
+            <span class="material-symbols-outlined rounded p-sm bg-err text-w ml-2 cursor-p text-md" id="mark-remove-email">
+              person_remove
+            </span>
+            <div class="flex f-center ml-2 p-1 ">
+              <p class="text-sm w-100 <%= collaborator.is_accepted ? "bg-s" : "bg-err" %> p-sm rounded text-w text-center"><%= collaborator.is_accepted ? "Task_Accepted" : "Not_Accepted" %></p>
+              <p class="text-sm w-100 <%= collaborator.is_completed ? "bg-s" : "bg-err" %> p-sm rounded text-w text-center ml-1"><%= collaborator.is_completed ? "Task_completed" : "Not_Completed" %></p>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+  <%# collabs %>
+  <div class="mb-4 max-w-400">
+    <h2 class="hd-md mt-4"> <%= request.path != new_task_path ? "Add New " : "" %> Collaborate</h2>
     <div class="flex f-c">
       <div class="input_field flex f-center pos-rel">
-        <input type="email" name="collab[email][]" class="collab-email-input" id="collab[email]" placeholder="email" autocomplete="off">
+        <input type="email" name="collab[emails][]" class="collab-email-input" id="collab[emails]" placeholder="email" autocomplete="off">
         <span class="material-symbols-outlined p-1 rounded-sm bg-p text-w ml-2 cursor-p" id="add-email-input">
           add
         </span>
-        <%# <div class="emails pos-abs bg-w p-1 rounded-md shadow" style="left:0 ; top: 40px;">
-          <p class="text-sm p-sm">hello@gmail.com</p>
-          <p class="text-sm p-sm">hello@gmail.com</p>
-          <p class="text-sm p-sm">hello@gmail.com</p>
-          <p class="text-sm p-sm">hello@gmail.com</p>
-        </div> %>
       </div>
     </div>
   </div>
-  <% if task.is_completed == true || task.is_completed == false%>
+  <% if task.is_completed || !task.is_completed || task.is_completed == nil %>
     <div class="input-field mb-2">
       <h3 class="hd-md">Task Completion Status</h3>
       <label class="toggle" for="task_is_completed">

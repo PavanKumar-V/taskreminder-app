@@ -2,13 +2,14 @@ class StarredTasksController < ApplicationController
   before_action :authenticate_user!
 #  GET /starred_tasks/
   def index
-    @starred_tasks = Task.joins("INNER JOIN starred_tasks ON tasks.id = starred_tasks.task_id where tasks.user_id = #{current_user.id}").order("start_date DESC");
+    @collab_data = current_user.tasks.joins(:starred_tasks).joins("right join collaborators on collaborators.task_id = starred_tasks.task_id inner join users on users.id = collaborators.user_id left join avatars on avatars.id = users.avatar_id").select("tasks.id as taskId, collaborators.*, users.email, avatars.avatar_url").where("collaborators.is_accepted = true")
+    @starred_tasks = Task.joins(:starred_tasks).where("starred_tasks.user_id = #{current_user.id}").order("start_date DESC");
   end
 
 #  POST /starred_tasks/1
   def add
     task = Task.find(params[:id]);
-    @is_starred = StarredTask.where(["task_id == ?", params[:id]])
+    @is_starred = StarredTask.where({task_id: params[:id], user_id: current_user.id})
 
     if task && @is_starred.size <= 0
       user = User.find(current_user.id);

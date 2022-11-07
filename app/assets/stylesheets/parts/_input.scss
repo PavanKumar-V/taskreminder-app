@@ -21,6 +21,11 @@ select {
   transition: all 0.2s ease-in;
 }
 
+input[readonly]{
+  background-color: $grey;
+  padding: 8px;
+}
+
 
 input[type="file"] {
   border: none;
@@ -38,8 +43,8 @@ input[type="file"] {
   cursor: pointer;
 }
 
-input[value].input-slate,
-textarea.input-slate {
+input[value].input-slate
+{
   font-size: 18px;
   font-weight: 500;
 }

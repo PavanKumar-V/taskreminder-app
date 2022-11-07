@@ -9,22 +9,26 @@ def is_current(path)
   end
 %>
 <%# Task Card %>
-<div class="card p-2 <%= task.is_completed ? " bg-s " : " bg-p "  %>  rounded-lg task-card" id="<%= dom_id task %>">
+<div class="card p-2 cursor-p <%= task.is_completed ? " bg-s " : " bg-p "  %>  rounded-lg task-card" id="<%= dom_id task %>" >
   <%# Title and poup menu %>
   <div class="flex f-space-between">
     <div class="flex f-c f-start">
-      <h6 class="hd-md text-w capitize <%= task.is_completed ? " text-line-through " : " "%>"><%= task.title.size > 13 ? (task.title[0..10] + "...") : task.title %></h6>
+      <a class="hd-md text-w capitize text-bl text-hover-underline <%= task.is_completed ? " text-line-through " : " "%>" href="<%= show_task_path(task.id)%>"><%= task.title.size > 13 ? (task.title[0..10] + "...") : task.title %></a>
     </div>
-    <div>
-      <span class="material-symbols-outlined cursor-p popup-toggler icon bg-w rounded-o " id="popup-toggler" style="font-weight: bolder; padding:3px;">more_vert</span>
-      <%# pop up menu %>
-      <div class="popup-menu display-none">
-        <ul>
-          <% is_starred_page =  is_current(starred_tasks_path) %>
-          <li class="popup-link"> <%= link_to  is_starred_page ? "Remove" : "Star" , is_starred_page ? remove_starred_path(task) : add_to_starred_path(task), method: is_starred_page ? :delete : :post %></li>
-          <li class="popup-link"><%= link_to "Edit", edit_task_path(task) %></li>
-          <li class="popup-link"><%= button_to "Delete", task, method: :delete, data: {"confirm": :"Are you sure?"}, class: "btn-link"%></li>
-        </ul>
+    <div class="flex f-center-vh">
+      <div>
+        <span class="material-symbols-outlined cursor-p popup-toggler icon bg-w rounded-o " id="popup-toggler" style="font-weight: bolder; padding:3px;">more_vert</span>
+        <%# pop up menu %>
+        <div class="popup-menu display-none">
+          <ul>
+            <% is_starred_page =  is_current(starred_tasks_path) %>
+            <li class="popup-link"> <%= link_to  is_starred_page ? "Remove" : "Star" , is_starred_page ? remove_starred_path(task) : add_to_starred_path(task), method: is_starred_page ? :delete : :post %></li>
+            <% if task.user_id == current_user.id %>
+              <li class="popup-link"><%= link_to "Edit", edit_task_path(task) %></li>
+              <li class="popup-link"><%= button_to "Delete", task, method: :delete, data: {"confirm": :"Are you sure?"}, class: "btn-link"%></li>
+            <% end %>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -39,28 +43,50 @@ def is_current(path)
       <%= task.end_date.strftime("%I:%M %p") %>
     </p>
   </div>
+  <%#  %>
   <%# bottom section collaborators and button action %>
   <div class="flex f-space-between mt-3 ">
     <% if collabs.size() > 0 %>
       <div class="flex f-c">
         <p class=" text-w-hint">collaborators</p>
         <div class="flex">
-          <div class="avatars-stack pos-rel">
+          <div class="avatar-group">
+            <div class="hidden-avatars text-sm">
+              <%= collabs.size() %>
+            </div>
             <% collabs.each do |collab| %>
-              <% if collab.avatar_url != nil %>
-                <img src="<%= collab.avatar_url %>" class="avatar avatar-sm stacked-avatar m-0" alt="">
-              <% else %>
-                <%= image_tag "avatar.png", class: "avatar avatar-sm stacked-avatar m-0" %>
-              <% end %>
+              <div class="avatar-stack">
+                <% if collab.avatar_url != nil %>
+                  <img src="<%= collab.avatar_url %>" class="" alt="">
+                <% else %>
+                  <%= image_tag "avatar.png", class: "" %>
+                <% end %>
+              </div>
             <% end %>
           </div>
         </div>
       </div>
+    <% elsif collab_task %>
+      <%= link_to "view", show_task_path(task.id), class: "test-sm text-w-hint cursor-p" %>
     <% else %>
       <p class=" text-w-hint"> No collaborators</p>
     <% end %>
-    <% if !task.is_completed %>
-      <%= link_to "Mark Complete", "/tasks/#{task.id}/task_complete", method: :patch,data: {"confirm": :"Are you sure?"}, class: "btn btn-peace" %>
+    <%#  %>
+    <%#  %>
+    <%#  %>
+    <%# action to complete %>
+    <% if task.user_id == current_user.id %>
+      <% if !task.is_completed %>
+        <%= link_to "Mark Complete", "/tasks/#{task.id}/task_complete", method: :patch,data: {"confirm": :"Are you sure?"}, class: "btn btn-peace" %>
+      <% end %>
+    <% elsif !task.is_completed && request.path != starred_tasks_path %>
+      <% if task.collab_is_complete != 1 %>
+        <%= link_to "Mark Complete", collab_mark_complete_path(task.id), method: :patch,data: {"confirm": :"Are you sure?"}, class: "btn btn-success" %>
+      <% else %>
+        <%= link_to "Mark uncomplete", collab_mark_incomplete_path(task.id), method: :put,data: {"confirm": :"Are you sure?"}, class: "btn btn-danger" %>
+        <%# <p class="text-sm p-sm bg-s text-w rounded">You completed the task</p> %>
+      <% end %>
+    <% else %>
     <% end %>
   </div>
 </div>

@@ -1,18 +1,17 @@
 jQuery(function () {
   // var optional_config;
 
- const fp =  $(".date-picker").flatpickr({
+
+
+
+
+  $(".date-picker").flatpickr({
     enableTime: "true",
     allowInput: false,
     dateFormat: "M d, Y h:i K",
-    defaultDate: [new Date()],
   });
 
-  $(".date-picker").on('click', function () {
-    fp.setDate(new Date(`${$(this).attr("data-id")}`), "", "")
-   })
-
-   var inlineCalendarDate = $("#cur-date").text()
+  var inlineCalendarDate = $("#cur-date").text();
 
   $(".date-picker-calendar").flatpickr({
     allowInput: false, // if doesn't need - disable it.
@@ -28,4 +27,17 @@ jQuery(function () {
     link_to.attr("href", `/tasks/date/${date}`);
     console.log(link_to.attr("href"));
   });
+
+  var optional_config = {
+    enableTime: "true",
+    allowInput: false,
+    dateFormat: "M d, Y h:i K",
+  }
+
+  var start_date = $(".start-date").val();
+  var end_date = $(".end-date").val();
+
+  console.log(start_date);
+  $(".start-date").flatpickr({...optional_config, defaultDate: new Date(start_date)});
+  $(".end-date").flatpickr({...optional_config, defaultDate: new Date(end_date)});
 });

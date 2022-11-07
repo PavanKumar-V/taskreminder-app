@@ -1,13 +1,13 @@
 <div class="">
-
   <div class="mb-4">
-     <% if @avatar && @avatar.image.attached? %>
-    <%= image_tag @avatar.image, class: "avatar-lg rounded-o", id: "popup-toggler" %>
-    <% else %>
-    <%= image_tag "avatar.png", class: "avatar-lg rounded-o", id: "popup-toggler" %>
-
-    <% end %>
-
+    <div class="flex f-jc-sb">
+      <% if @avatar && @avatar.image.attached? %>
+        <%= image_tag @avatar.image, class: "avatar-lg rounded-o", id: "popup-toggler" %>
+      <% else %>
+        <%= image_tag "avatar.png", class: "avatar-lg rounded-o", id: "popup-toggler" %>
+      <% end %>
+      <%= image_tag "avatar.png", class: "avatar-sm rounded-o cursor-p show-on-small", id: "sidebar-toggler" %>
+    </div>
     <h1 class="hd-lg  capitize text-bl"><%= @user.full_name %></h1>
     <p class="px-1 py-2 text-center bg-p rounded-lg text-w display-inline" ><%= @user.email %></p>
   </div>
@@ -24,19 +24,19 @@
       <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
         <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
       <% end %>
-     <div class="p-1 border-dashed rounded-md mb-2">
-       <h1 class="hd-sm capitize text-bl mb-2">New Password</h1>
-      <p class="">Leave Blank if you don't want to change password</p>
-      <div class="field mb-1">
-        <%= f.password_field :password , placeholder: "New Password", autocomplete: "new-password" %>
-        <% if @minimum_password_length %>
-          <p class="text-sm"><%= @minimum_password_length %> characters minimum</p>
-        <% end %>
+      <div class="p-1 border-dashed rounded-md mb-2">
+        <h1 class="hd-sm capitize text-bl mb-2">New Password</h1>
+        <p class="">Leave Blank if you don't want to change password</p>
+        <div class="field mb-1">
+          <%= f.password_field :password , placeholder: "New Password", autocomplete: "new-password" %>
+          <% if @minimum_password_length %>
+            <p class="text-sm"><%= @minimum_password_length %> characters minimum</p>
+          <% end %>
+        </div>
+        <div class="field mb-2">
+          <%= f.password_field :password_confirmation , placeholder: "Confirm Password", autocomplete: "new-password" %>
+        </div>
       </div>
-      <div class="field mb-2">
-        <%= f.password_field :password_confirmation , placeholder: "Confirm Password", autocomplete: "new-password" %>
-      </div>
-     </div>
       <div class="field mb-3">
         <%= f.password_field :current_password , placeholder: "Current Password", autocomplete: "current-password" %>
       </div>
@@ -44,6 +44,5 @@
         <%= f.submit "Save Changes", class: "btn btn-lg" %>
       </div>
     <% end %>
-
   </div>
 </div>

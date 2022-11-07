@@ -41,6 +41,28 @@ class CollaboratorsController < ApplicationController
     end
   end
 
+  # patch /collab/completed
+  def mark_complete
+    # params task_id
+    if params[:task_id]
+      collab = current_user.collaborators.where(task_id: params[:task_id], user_id: current_user.id).update({is_completed: true})
+      redirect_to "/tasks", notice: "task completed"
+    else
+      redirect_to "/tasks", notice: "something went wrong"
+    end
+  end
+
+  # put /collab/completed
+  def mark_incomplete
+    # params task_id
+    if params[:task_id]
+      collab = current_user.collaborators.where(task_id: params[:task_id], user_id: current_user.id).update({is_completed: false})
+      redirect_to "/tasks", notice: "Task marked incomplete"
+    else
+      redirect_to "/tasks", notice: "something went wrong"
+    end
+  end
+
   private
 
   def task_params

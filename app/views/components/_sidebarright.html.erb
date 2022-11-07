@@ -15,9 +15,13 @@ def is_collab_request_page(path)
     end
   end
 %>
-%>
-<div class="sidebar sidebar-right pos-">
-  <div class="side-nav bl-2 flex f-c f-start" style="margin-top: 50px">
+<div class="sidebar sidebar-right ">
+  <div class="side-nav bl-2 flex f-c f-start pos-rel" style="margin-top: 50px">
+    <div class="action pos-abs" style="right: 10px">
+      <span class="material-symbols-outlined ml-3 p-1 bg-c rounded-o show-on-small cursor-p shadow" id="sidebar-closer">
+        close
+      </span>
+    </div>
     <% if is_edit_page(edit_user_registration_path) %>
       <div class="py-2 pos-fix">
         <div class="mb-4">
@@ -53,7 +57,7 @@ def is_collab_request_page(path)
     <% elsif is_collab_request_page(collab_request_path) %>
       <div class="p-1 pos-fix">
         <h4 class="hd-md mb-2 ">Collab Requests</h4>
-        <div class="overflow-scroll" >
+        <div class="overflow-scroll" style="height: 90vh;">
           <% if @collab_requests.size() > 0%>
             <% @collab_requests.each do |collab| %>
               <%= render :partial => "tasks/collab_request", :locals => {collab: collab } %>

@@ -11,7 +11,9 @@
 }
 @media only screen and (max-width: $tablet-size) {
   .sidebar-right {
-    display: none;
+    position: fixed;
+    box-shadow: 5px 0px 12px rgba($text, 0.8);
+    right: -400px;
   }
 
   .sb {

@@ -160,6 +160,9 @@
   background-color: $primary;
 }
 
+.bg-sec{
+  background-color: $secondary;
+}
 .bg-s {
   background-color: $success;
 }
@@ -188,6 +191,13 @@
   color: $black !important;
 }
 
+.text-success {
+  color: $success !important;
+}
+.text-error {
+  color: $error !important;
+}
+
 .text-p-dark {
   color: $primaryDark !important;
 }
@@ -214,6 +224,12 @@
 
 .text-underline {
   text-decoration: underline;
+}
+
+.text-hover-underline{
+  &:hover{
+    text-decoration: underline;
+  }
 }
 
 //
@@ -261,6 +277,14 @@
 
 .min-w-300 {
   min-width: 300px;
+}
+
+.max-w-300 {
+  max-width: 300px;
+}
+
+.max-w-400 {
+  max-width: 400px;
 }
 
 .w-50 {
@@ -360,7 +384,6 @@
 
 .f-space-between {
   justify-content: space-between;
-  align-items: center;
 }
 
 // grid
@@ -410,6 +433,9 @@
 }
 
 // border
+.border-danger{
+  border: 1px solid $error !important;
+}
 .border-dashed {
   border: 2px solid $primary;
   border-style: dashed;
@@ -418,8 +444,6 @@
 // overflow
 .overflow-scroll {
   overflow: scroll;
-
-
 }
 
 // scroll
@@ -463,4 +487,9 @@
 /* Handle on hover */
 .overflow-scroll::-webkit-scrollbar-thumb:hover {
   background: $primary;
+}
+
+
+.scale-1{
+  transform: scale(1.5);
 }
