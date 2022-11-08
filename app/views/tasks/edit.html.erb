@@ -1,6 +1,6 @@
 <div class="flex">
   <div>
-  <a href="<%= tasks_path %>">
+  <a href="<%= tasks_by_date_path(Date.parse("#{@task.start_date}").strftime("%Y-%m-%d")) %>">
     <span class="material-symbols-outlined mr-3 p-1 bg-c rounded-o">
       arrow_back
     </span>

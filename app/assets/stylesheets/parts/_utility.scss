@@ -436,6 +436,9 @@
 .border-danger{
   border: 1px solid $error !important;
 }
+.border-danger-3{
+  outline: 4px solid $error !important;
+}
 .border-dashed {
   border: 2px solid $primary;
   border-style: dashed;

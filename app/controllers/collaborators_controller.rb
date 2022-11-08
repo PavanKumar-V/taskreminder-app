@@ -1,5 +1,7 @@
 class CollaboratorsController < ApplicationController
 
+  before_action :get_task, only: %i[mark_complete mark_uncomplete]
+
   # post /collab/new
   def add_collab
     collab = Collaborator.new
@@ -10,7 +12,6 @@ class CollaboratorsController < ApplicationController
     puts params[:email_string]
     if params[:email_string]
       result = User.all.select("users.id, users.email").where("email Like '%#{params[:email_string]}%'");
-      puts result
       render :json => {:emails => result}.to_json
     end
   end
@@ -46,18 +47,18 @@ class CollaboratorsController < ApplicationController
     # params task_id
     if params[:task_id]
       collab = current_user.collaborators.where(task_id: params[:task_id], user_id: current_user.id).update({is_completed: true})
-      redirect_to "/tasks", notice: "task completed"
+      redirect_to tasks_by_date_url(Date.parse(@task.start_date.strftime("%Y-%m-%d"))), notice: "task completed"
     else
       redirect_to "/tasks", notice: "something went wrong"
     end
   end
 
   # put /collab/completed
-  def mark_incomplete
+  def mark_uncomplete
     # params task_id
     if params[:task_id]
       collab = current_user.collaborators.where(task_id: params[:task_id], user_id: current_user.id).update({is_completed: false})
-      redirect_to "/tasks", notice: "Task marked incomplete"
+      redirect_to tasks_by_date_url(Date.parse(@task.start_date.strftime("%Y-%m-%d"))), notice: "Task marked incomplete"
     else
       redirect_to "/tasks", notice: "something went wrong"
     end
@@ -65,7 +66,11 @@ class CollaboratorsController < ApplicationController
 
   private
 
+  def get_task
+    @task = Task.find(params[:task_id])
+  end
+
   def task_params
-    params.permit( :email_string)
+    params.permit( :email_string, :task_id)
   end
 end

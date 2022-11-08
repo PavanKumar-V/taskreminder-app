@@ -9,7 +9,7 @@ def is_current(path)
   end
 %>
 <%# Task Card %>
-<div class="card p-2 <%= task.is_completed ? " bg-s " : " bg-p "  %>  rounded-lg task-card" id="<%= dom_id task %>" >
+<div class="card p-2 <%= task.is_completed ? " bg-s " : Time.parse(task.end_date.to_s) < Time.zone.now ? "bg-err" : " bg-p "  %>  rounded-lg task-card" id="<%= dom_id task %>" >
   <%# Title and poup menu %>
   <div class="flex f-space-between">
     <div class="flex f-c f-start">
@@ -39,16 +39,16 @@ def is_current(path)
       <span class="material-symbols-outlined text-md text-w mr-1">
         calendar_today
       </span>
-      <%= task.start_date.strftime("%I:%M %p") %> -
-      <%= task.end_date.strftime("%I:%M %p") %>
+      <%= task.end_date.strftime("%b %d, %Y %I:%M %p")  %>
     </p>
   </div>
   <%#  %>
   <%# bottom section collaborators and button action %>
-  <div class="flex f-space-between mt-3 ">
+  <div class="flex f-center f-space-between mt-3 ">
+
     <% if collabs.size() > 0 %>
       <div class="flex f-c">
-        <p class=" text-w-hint">collaborators</p>
+        <p class="text-sm mb-2 capitize text-w">collaborators</p>
         <div class="flex">
           <div class="avatar-group">
             <div class="hidden-avatars text-sm">
@@ -73,13 +73,15 @@ def is_current(path)
     <%# action to complete %>
     <% if task.user_id == current_user.id %>
       <% if !task.is_completed %>
-        <%= link_to "Mark Complete", "/tasks/#{task.id}/task_complete", method: :patch,data: {"confirm": :"Are you sure?"}, class: "btn btn-peace" %>
+        <%= link_to "Mark Complete", mark_complete_path(task.id), method: :patch,data: {"confirm": :"Are you sure?"}, class: "btn btn-peace" %>
+      <% else %>
+        <%= link_to "Mark uncomplete", mark_uncomplete_path(task.id), method: :patch, class: "btn btn-peace" %>
       <% end %>
     <% elsif !task.is_completed && request.path != starred_tasks_path %>
       <% if task.collab_is_complete != 1 %>
-        <%= link_to "Mark Complete", collab_mark_complete_path(task.id), method: :patch,data: {"confirm": :"Are you sure?"}, class: "btn btn-success" %>
+        <%= link_to "Mark Complete", collab_mark_complete_path(task.id), method: :patch,data: {"confirm": :"Are you sure?"}, class: "btn btn-peace" %>
       <% else %>
-        <%= link_to "Mark uncomplete", collab_mark_incomplete_path(task.id), method: :put,data: {"confirm": :"Are you sure?"}, class: "btn btn-danger" %>
+        <%= link_to "Mark uncomplete", collab_mark_incomplete_path(task.id), method: :put,data: {"confirm": :"Are you sure?"}, class: "btn btn-success" %>
         <%# <p class="text-sm p-sm bg-s text-w rounded">You completed the task</p> %>
       <% end %>
     <% else %>

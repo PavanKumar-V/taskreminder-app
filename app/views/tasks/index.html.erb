@@ -7,8 +7,8 @@
           chevron_left
         </span>
       </a>
-      <h4 id="cur-date"> <%= @date ? @date : Time.now.strftime("%Y-%m-%d") %> </h4>
-      <a href="/tasks/date/<%= @date ? Date.parse(@date).next : Date.parse(Time.now.strftime("%Y-%m-%d")).next %>">
+      <h4 id="cur-date"> <%= @date ? Date.parse("#{@date}").strftime("%Y-%m-%d") : Time.now.strftime("%Y-%m-%d") %> </h4>
+      <a href="/tasks/date/<%= @date ? Date.parse("#{@date}").next : Date.parse(Time.now.strftime("%Y-%m-%d")).next %>">
         <span class="material-symbols-outlined ml-3 p-1 bg-c rounded-o">
           chevron_right
         </span>

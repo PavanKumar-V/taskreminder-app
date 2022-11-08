@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: %i[ edit update destroy mark_complete ]
+  before_action :set_task, only: %i[ edit update destroy mark_complete mark_uncomplete ]
   before_action :get_user, only: %i[ new create index]
   before_action :collab_data, only: %i[index collab_requests get_tasks_by_date]
   before_action :collab_tasks, only: %i[index collab_requests get_tasks_by_date]
@@ -42,7 +42,7 @@ class TasksController < ApplicationController
       if @task.save
         # add collab
         add_or_remove_collaborator(params["collab"]["emails"], @task.id, "ADD")
-        redirect_to "/tasks", notice: "Task was successfully created"
+        redirect_to tasks_by_date_url(Date.parse(@task.start_date.strftime("%Y-%m-%d"))), notice: "Task was successfully created"
       else
         render :new, status: :unprocessable_entity
       end
@@ -61,7 +61,7 @@ class TasksController < ApplicationController
         add_or_remove_collaborator(params["collab"]["remove_emails"], @task.id, "REMOVE")
       end
 
-      redirect_to tasks_url(@tasks), notice: "Task was successfully updated"
+      redirect_to tasks_by_date_url(Date.parse(@task.start_date.strftime("%Y-%m-%d"))), notice: "Task was successfully updated"
     else
       render :edit, status: :unprocessable_entity
     end
@@ -69,10 +69,9 @@ class TasksController < ApplicationController
 
   # DELETE /tasks/1 or /tasks/1.json
   def destroy
-    task = current_user.tasks.find(params[:id])
-    if task
-      task.destroy
-      redirect_to "/tasks" , notice: "Task deleted"
+    if @task
+      @task.destroy
+      redirect_to tasks_by_date_url(Date.parse(@task.start_date.strftime("%Y-%m-%d"))), notice: "Task deleted"
     else
       redirect_to "/tasks" , notice: "Task could not be deleted"
     end
@@ -91,7 +90,16 @@ class TasksController < ApplicationController
   # PUT/PATCH /tasks/1
   def mark_complete
     if @task.update({:is_completed => true})
-      redirect_to tasks_url(@tasks), notice: "Task marked completed"
+      redirect_to tasks_by_date_url(Date.parse(@task.start_date.strftime("%Y-%m-%d"))), notice: "Task marked completed"
+    else
+      render :index, status: :unprocessable_entity
+    end
+  end
+
+  # PUT/PATCH /tasks/1
+  def mark_uncomplete
+    if @task.update({:is_completed => false})
+      redirect_to tasks_by_date_url(Date.parse(@task.start_date.strftime("%Y-%m-%d"))), notice: "Task marked uncompleted"
     else
       render :index, status: :unprocessable_entity
     end
@@ -137,6 +145,7 @@ class TasksController < ApplicationController
     def get_tasks
       @tasks = current_user.tasks.where(start_date: Date.parse("#{Time.now}")..Date.parse("#{Time.now}").next).order("start_date DESC");
     end
+
     def set_task
       begin
         # do something dodgy
@@ -154,7 +163,7 @@ class TasksController < ApplicationController
     # send collab data
     def collab_data
       if current_user
-        @collab_data = current_user.tasks.joins("right join collaborators on collaborators.task_id = tasks.id inner join users on users.id = collaborators.user_id left join avatars on avatars.id = users.avatar_id").select("tasks.id as taskId, collaborators.*, users.email, avatars.avatar_url").where(start_date: Date.parse("#{Time.now}")..Date.parse("#{Time.now}").next).where("collaborators.is_accepted = true")
+        @collab_data = current_user.tasks.joins("right join collaborators on collaborators.task_id = tasks.id inner join users on users.id = collaborators.user_id left join avatars on avatars.id = users.avatar_id").select("tasks.id as taskId, collaborators.*, users.email, avatars.avatar_url").where("start_date > ?", params[:date] ? Time.parse("#{params[:date]}") : Date.new).where("collaborators.is_accepted = true")
       end
     end
 
