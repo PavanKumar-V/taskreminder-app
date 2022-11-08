@@ -12,7 +12,8 @@ Rails.application.routes.draw do
 
   patch "/users/edit/avatar/:id", to: "application#change_avatar"
   get "/tasks/date/:date", to: "tasks#get_tasks_by_date", as: "tasks_by_date"
-  patch "/tasks/:id/task_complete", to: "tasks#mark_complete"
+  patch "/tasks/:id/task_complete", to: "tasks#mark_complete",  as: "mark_complete"
+  patch "/tasks/:id/task_uncomplete", to: "tasks#mark_uncomplete" , as: "mark_uncomplete"
   get "/tasks/:id", to: "tasks#show", as: "show_task"
 
 
@@ -21,7 +22,7 @@ Rails.application.routes.draw do
   patch "/collab/accept/:task_id", to: "collaborators#accept_request", as: "accept_request"
   patch "/collab/reject/:task_id", to: "collaborators#reject_request", as: "reject_request"
   patch "/collab/complete/:task_id", to: "collaborators#mark_complete", as: "collab_mark_complete"
-  put "/collab/complete/:task_id", to: "collaborators#mark_incomplete", as: "collab_mark_incomplete"
+  put "/collab/complete/:task_id", to: "collaborators#mark_uncomplete", as: "collab_mark_incomplete"
 
   # collab email API
   get "/collab/emails/:email_string", to: "collaborators#get_emails"
