@@ -18,7 +18,7 @@ class TasksController < ApplicationController
   # collaborators
   # GET /tasks/collabrequests
   def collab_requests
-    @collab_requests = Task.joins(:user, :collaborators).joins("inner join avatars on avatars.id = users.avatar_id").select("collaborators.task_id, tasks.title, tasks.end_date, users.full_name, users.email, avatars.avatar_url").where("collaborators.user_id = #{current_user.id} and collaborators.is_accepted != true").order("collaborators.created_at DESC")
+    @collab_requests = Task.joins(:user, :collaborators).joins("inner join avatars on avatars.id = users.avatar_id").select("collaborators.task_id, tasks.title, tasks.end_date, users.full_name, users.email, avatars.avatar_url").where("collaborators.user_id = #{current_user.id} and collaborators.is_accepted != true").where("tasks.end_date > ?", Time.now.utc).order("collaborators.created_at DESC")
     render :index, notice: "collab requests updated"
   end
 
@@ -112,9 +112,9 @@ class TasksController < ApplicationController
     next_day_date = Date.parse(Date.parse(params[:date]).strftime("%Y-%m-%d")).next;
     @tasks = current_user.tasks.where(start_date: (params[:date])..("#{next_day_date}")).order("start_date DESC");
     @date = params[:date]
-    render :index
+    render :index, notice: "tasks updated"
   else
-    redirect_to tasks_url(@tasks), notice: "specify date"
+    redirect_to :index, notice: "specify date"
   end
   end
 
@@ -142,10 +142,12 @@ class TasksController < ApplicationController
   private
     # # Use callbacks to share common setup or constraints between actions.
 
+    # get task
     def get_tasks
       @tasks = current_user.tasks.where(start_date: Date.parse("#{Time.now}")..Date.parse("#{Time.now}").next).order("start_date DESC");
     end
 
+    # set task
     def set_task
       begin
         # do something dodgy
@@ -156,6 +158,7 @@ class TasksController < ApplicationController
       end
     end
 
+    # get user
     def get_user
       @user = User.find(current_user.id)
     end
