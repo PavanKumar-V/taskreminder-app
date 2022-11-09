@@ -18,7 +18,7 @@ class TasksController < ApplicationController
   # collaborators
   # GET /tasks/collabrequests
   def collab_requests
-    @collab_requests = Task.joins(:user, :collaborators).joins("inner join avatars on avatars.id = users.avatar_id").select("collaborators.task_id, tasks.title, tasks.end_date, users.full_name, users.email, avatars.avatar_url").where("collaborators.user_id = #{current_user.id} and collaborators.is_accepted != true").order("collaborators.created_at DESC")
+    @collab_requests = Task.joins(:user, :collaborators).joins("inner join avatars on avatars.id = users.avatar_id").select("collaborators.task_id, tasks.title, tasks.end_date, users.full_name, users.email, avatars.avatar_url").where("collaborators.user_id = #{current_user.id} and collaborators.is_accepted != true").where("tasks.end_date > ?", Time.now.utc).order("collaborators.created_at DESC")
     render :index, notice: "collab requests updated"
   end
 

@@ -39,7 +39,7 @@ def is_current(path)
       <span class="material-symbols-outlined text-md text-w mr-1">
         calendar_today
       </span>
-      <%= task.end_date  %>
+      <%= task.end_date.strftime("%^b %d, %Y %I:%M %p")  %>
     </p>
   </div>
   <%#  %>
