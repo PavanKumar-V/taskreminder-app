@@ -39,7 +39,6 @@ def is_current(path)
       <span class="material-symbols-outlined text-md text-w mr-1">
         calendar_today
       </span>
-
       <%# end date %>
       <%= task.end_date.strftime("%^b %d, %Y %I:%M %p")  %>
     </p>
@@ -55,14 +54,17 @@ def is_current(path)
             <div class="hidden-avatars text-sm">
               <%= collabs.size() %>
             </div>
-            <% collabs.each do |collab| %>
-              <div class="avatar-stack">
-                <% if collab.avatar_url != nil %>
-                  <img src="<%= collab.avatar_url %>" class="" alt="">
-                <% else %>
-                  <%= image_tag "avatar.png", class: "" %>
-                <% end %>
-              </div>
+            <% if task.user_id != current_user.id %>
+            <% else %>
+              <% collabs.each do |collab| %>
+                <div class="avatar-stack">
+                  <% if collab.avatar_url != nil %>
+                    <img src="<%= collab.avatar_url %>" class="" alt="">
+                  <% else %>
+                    <%= image_tag "avatar.png", class: "" %>
+                  <% end %>
+                </div>
+              <% end %>
             <% end %>
           </div>
         </div>
@@ -75,6 +77,8 @@ def is_current(path)
     <% if task.user_id == current_user.id %>
       <% if !task.is_completed %>
         <%= link_to "Mark Complete", "/tasks/#{task.id}/task_complete", method: :patch,data: {"confirm": :"Are you sure?"}, class: "btn btn-peace" %>
+      <% else %>
+        <%= link_to "Mark uncomplete", mark_uncomplete_path(task.id), method: :patch,data: {"confirm": :"Are you sure?"}, class: "btn btn-peace" %>
       <% end %>
     <% elsif !task.is_completed && request.path != starred_tasks_path %>
       <% if task.collab_is_complete != 1 %>

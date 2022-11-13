@@ -37,7 +37,7 @@
     <h1 class="hd-lg mt-3 mb-2">Collabs By Others</h1>
     <div class="tasks grid">
       <% @collab_tasks.each do |task| %>
-        <%= render task, collabs: @collab_data.select{ |tasks| tasks[:task_id] == task.id }, collab_task: true%>
+        <%= render task, collabs: Collaborat, collab_task: true%>
       <% end %>
     </div>
   <% end %>

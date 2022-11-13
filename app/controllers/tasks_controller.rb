@@ -178,6 +178,7 @@ class TasksController < ApplicationController
       else
         @collab_tasks = Task.where(start_date: Date.parse("#{Time.now}")..Date.parse("#{Time.now}").next).joins(:collaborators).select("tasks.*, collaborators.is_completed as collab_is_complete").where("collaborators.user_id = #{current_user.id} and collaborators.is_accepted = true").order("start_date DESC");
       end
+      @collab_tasks_data = @collab_tasks.joins("right join collaborators on collaborators.task_id = tasks.id inner join users on users.id = tasks.user_id inner join avatars on avatars.id = users.avatar_id").select("tasks.id as taskId, collaborators.*, users.email, avatars.avatar_url").where("start_date > ?", params[:date] ? Time.parse("#{params[:date]}") : Date.new).where("collaborators.is_accepted = true")
     end
 
     # before_show
