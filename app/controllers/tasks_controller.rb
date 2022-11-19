@@ -6,6 +6,7 @@ class TasksController < ApplicationController
   before_action :before_show, only: %i[show]
   before_action :get_tasks, only: %i[collab_requests]
   before_action :authenticate_user!
+  
   # GET /tasks or /tasks.json
   def index
     if (params[:search])
@@ -82,7 +83,7 @@ class TasksController < ApplicationController
     # @collaborators = Collaborator.find_by(task_id: params[:id], user_id: current_user.id)
 
     @task = Task.find(params[:id])
-    @collaborators = @task.collaborators.joins(:user).joins("inner join avatars on avatars.id = users.avatar_id").select("collaborators.*, users.email, avatars.avatar_url")
+    @collaborators = @task.collaborators.joins(:user).joins("left join avatars on avatars.id = users.avatar_id").select("collaborators.*, users.email, avatars.avatar_url")
 
     render :show
   end

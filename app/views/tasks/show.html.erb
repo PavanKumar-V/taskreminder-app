@@ -1,6 +1,6 @@
 <div class="flex">
   <div>
-      <a href="<%= tasks_by_date_path(Date.parse("#{@task.start_date}").strftime("%Y-%m-%d")) %>">
+    <a href="<%= tasks_by_date_path(Date.parse("#{@task.start_date}").strftime("%Y-%m-%d")) %>">
       <span class="material-symbols-outlined mr-3 p-1 bg-c rounded-o">
         arrow_back
       </span>
@@ -30,7 +30,11 @@
         <% unless !collab.is_accepted  %>
           <div class="flex f-center f-jc-sb mb-2">
             <div class="flex f-center-vh">
-              <%= image_tag collab.avatar_url, class: "avatar avatar-sm" %>
+              <% if collab.avatar_url != nil %>
+                <%= image_tag collab.avatar_url, class: "avatar avatar-sm" %>
+              <% else %>
+                <%= image_tag "avatar.png", class: "avatar avatar-sm" %>
+              <% end %>
               <p class="text-md ml-2"><%= collab.email %></p>
             </div>
             <p class="text-sm ml-4 text-bl <%= collab.is_completed ? "text-success" : "text-error"%> "><%= collab.is_completed ? "Completed" : "Task Incomplete"%></p>
@@ -44,7 +48,11 @@
         <% unless collab.is_accepted  %>
           <div class="flex f-center f-jc-sb mb-1">
             <div class="flex f-center">
-              <%= image_tag collab.avatar_url, class: "avatar avatar-sm" %>
+              <% if collab.avatar_url != nil %>
+                <%= image_tag collab.avatar_url, class: "avatar avatar-sm" %>
+              <% else %>
+                <%= image_tag "avatar.png", class: "avatar avatar-sm" %>
+              <% end %>
               <p class="text-md ml-2"><%= collab.email %></p>
             </div>
             <p class="text-sm ml-4 text-bl text-error ">Pending</p>

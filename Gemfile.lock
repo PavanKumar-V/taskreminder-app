@@ -205,7 +205,6 @@ GEM
     sqlite3 (1.5.3-x64-mingw-ucrt)
     stimulus-rails (1.1.0)
       railties (>= 6.0.0)
-    table_print (1.5.7)
     thor (1.2.1)
     tilt (2.0.11)
     timeout (0.3.0)
@@ -252,7 +251,6 @@ DEPENDENCIES
   sprockets-rails
   sqlite3 (~> 1.4)
   stimulus-rails
-  table_print
   tzinfo-data
   web-console
   webdrivers

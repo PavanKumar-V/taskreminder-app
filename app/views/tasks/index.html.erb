@@ -1,3 +1,9 @@
+<%
+  def collab_data(task_id)
+    collab_data = Collaborator.joins(:user).joins("left join avatars on avatars.id = users.avatar_id").select("collaborators.user_id, collaborators.is_completed, avatars.avatar_url").where(task_id: task_id)
+    return collab_data
+  end
+%>
 <div>
   <div class="flex f-center mb-3">
     <h1 class="hd-lg">Tasks</h1>
@@ -24,7 +30,7 @@
     <% if @tasks.size() > 0 %>
       <% @tasks.each do |task| %>
         <% unless task.is_completed %>
-          <%= render task, collabs: @collab_data.select{ |tasks| tasks[:task_id] == task.id } , collab_task: false %>
+          <%= render task, collabs: collab_data(task.id) , collab_task: false %>
         <% end %>
       <% end %>
     <% else %>
@@ -37,7 +43,7 @@
     <h1 class="hd-lg mt-3 mb-2">Collabs By Others</h1>
     <div class="tasks grid">
       <% @collab_tasks.each do |task| %>
-        <%= render task, collabs: Collaborat, collab_task: true%>
+        <%= render task, collabs: collab_data(task.id), collab_task: true%>
       <% end %>
     </div>
   <% end %>
@@ -45,7 +51,7 @@
   <div class="tasks grid">
     <% @tasks.each do |task| %>
       <% unless !task.is_completed %>
-        <%= render task, collabs: @collab_data.select{ |tasks| tasks[:task_id] == task.id } , collab_task: false %>
+        <%= render task, collabs: collab_data(task.id), collab_task: false %>
       <% end %>
     <% end %>
   </div>

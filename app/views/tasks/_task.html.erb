@@ -45,7 +45,7 @@ def is_current(path)
   </div>
   <%#  %>
   <%# bottom section collaborators and button action %>
-  <div class="flex f-space-between mt-3 ">
+  <div class="flex f-space-between f-center mt-3 ">
     <% if collabs.size() > 0 %>
       <div class="flex f-c">
         <p class=" text-w-hint">collaborators</p>
@@ -54,17 +54,14 @@ def is_current(path)
             <div class="hidden-avatars text-sm">
               <%= collabs.size() %>
             </div>
-            <% if task.user_id != current_user.id %>
-            <% else %>
-              <% collabs.each do |collab| %>
-                <div class="avatar-stack">
-                  <% if collab.avatar_url != nil %>
-                    <img src="<%= collab.avatar_url %>" class="" alt="">
-                  <% else %>
-                    <%= image_tag "avatar.png", class: "" %>
-                  <% end %>
-                </div>
-              <% end %>
+            <% collabs.each do |collab| %>
+              <div class="avatar-stack">
+                <% if collab.avatar_url != nil %>
+                  <img src="<%= collab.avatar_url %>" class="" alt="">
+                <% else %>
+                  <%= image_tag "avatar.png", class: "" %>
+                <% end %>
+              </div>
             <% end %>
           </div>
         </div>
@@ -75,16 +72,19 @@ def is_current(path)
     <%#  %>
     <%# action to complete %>
     <% if task.user_id == current_user.id %>
+      <%# for owner  %>
       <% if !task.is_completed %>
-        <%= link_to "Mark Complete", "/tasks/#{task.id}/task_complete", method: :patch,data: {"confirm": :"Are you sure?"}, class: "btn btn-peace" %>
+        <%= link_to "Mark Complete", mark_complete_path(task.id), method: :patch,data: {"confirm": :"Are you sure?"}, class: "btn btn-peace" %>
       <% else %>
         <%= link_to "Mark uncomplete", mark_uncomplete_path(task.id), method: :patch,data: {"confirm": :"Are you sure?"}, class: "btn btn-peace" %>
       <% end %>
-    <% elsif !task.is_completed && request.path != starred_tasks_path %>
-      <% if task.collab_is_complete != 1 %>
-        <%= link_to "Mark Complete", collab_mark_complete_path(task.id), method: :patch,data: {"confirm": :"Are you sure?"}, class: "btn btn-success" %>
+      <%# for collab %>
+    <% elsif !task.is_completed  %>
+      <% collab_is_complete =  collabs.select { |collab|  collab.user_id == current_user.id  } %>
+      <% if !(collab_is_complete[0].is_completed) %>
+        <%= link_to "Mark Complete", collab_mark_complete_path(task.id), method: :patch,data: {"confirm": :"Are you sure?"}, class: "btn btn-peace" %>
       <% else %>
-        <%= link_to "Mark uncomplete", collab_mark_incomplete_path(task.id), method: :put,data: {"confirm": :"Are you sure?"}, class: "btn btn-danger" %>
+        <%= link_to "Mark uncomplete", collab_mark_incomplete_path(task.id), method: :put,data: {"confirm": :"Are you sure?"}, class: "btn btn-success" %>
         <%# <p class="text-sm p-sm bg-s text-w rounded">You completed the task</p> %>
       <% end %>
     <% else %>
